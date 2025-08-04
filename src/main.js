@@ -4,16 +4,16 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import { createPinia } from 'pinia' // 👈 import Pinia
+import { createPinia } from 'pinia'
 import piniaPersistedstate from 'pinia-plugin-persistedstate'
 import 'flowbite'
 
 const app = createApp(App)
 
-const pinia = createPinia()         // 👈 create a Pinia instance
+const pinia = createPinia()
 pinia.use(piniaPersistedstate)
 
-app.use(pinia)                      // 👈 register Pinia
+app.use(pinia)                      
 app.use(router)
 
 app.mount('#app')
