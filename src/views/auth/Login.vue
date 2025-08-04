@@ -15,9 +15,10 @@
   margin-top: 1rem;
 }
 
-.padding-top-50{
+.padding-top-50 {
   padding-top: 30%;
 }
+
 /* width-100{
 
 } */
@@ -26,30 +27,35 @@
 <template>
   <div class="w-full max-w-6xl mx-auto md:flex md:flex-row sm:flex-col min-h-screen">
     <!-- Left Section -->
-    <div class="bg-custom-light-green p-8 sm:hidden md:block md:p-12 md:w-full relative overflow-hidden rounded-[30px] h-full">
+    <div
+      class="bg-custom-light-green p-8 sm:hidden md:block md:p-12 md:w-full relative overflow-hidden rounded-[30px] h-full">
       <div class="z-10 relative">
         <!-- <h2 class="text-2xl font-bold mb-6">Your Logo</h2> -->
         <div class="mb-8">
           <img src="../../assets/Page-heading-logo.png" alt=""></img>
         </div>
         <div class="mt-16 md:mt-16 pt-32">
-          <h1 class="text-7xl md:text-7xl font-bold mb-4">Access <span class="text-[#55a73c]">Patient Records</span> with Confidence</h1>
+          <h1 class="text-7xl md:text-7xl font-bold mb-4">Access <span class="text-[#55a73c]">Patient Records</span>
+            with Confidence</h1>
           <!-- <h2 class="text-2xl md:text-3xl font-semibold mb-6">Lorem Ipsum is simply</h2> -->
           <p class="max-w-md opacity-90 text-gray-500 pt-8">
-            Our intelligent records system is designed to streamline patient care, giving healthcare professionals instant access to medical histories, lab results, and prescriptions - securely and reliably
+            Our intelligent records system is designed to streamline patient care, giving healthcare professionals
+            instant access to medical histories, lab results, and prescriptions - securely and reliably
           </p>
         </div>
       </div>
 
       <div class="padding-top-50">
 
-        <div
-          class="block w-full p-4 bg-custom-deep-green rounded-[20px] shadow-sm ">
-          <p class="text-sm text-[#F2FDEE] dark:text-[#F2FDEE]">“MediTrack has redefined how we manage patient information. It’s intuitive, fast, and ensures our data remains protected at all times. A critical tool in delivering high-quality healthcare.”
+        <div class="block w-full p-4 bg-custom-deep-green rounded-[20px] shadow-sm ">
+          <p class="text-sm text-[#F2FDEE] dark:text-[#F2FDEE]">“MediTrack has redefined how we manage patient
+            information. It’s intuitive, fast, and ensures our data remains protected at all times. A critical tool in
+            delivering high-quality healthcare.”
           </p>
           <div class="pt-3 flex">
             <div class="mr-3">
-              <img class="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1508002366005-75a695ee2d17?fm=jpg" alt="Rounded avatar"></img>
+              <img class="w-10 h-10 rounded-full"
+                src="https://images.unsplash.com/photo-1508002366005-75a695ee2d17?fm=jpg" alt="Rounded avatar"></img>
             </div>
             <div>
               <h2 class="text-[#F2FDEE] text-sm bold">Dr. Evelyn Opara</h2>
@@ -77,10 +83,10 @@
 
         <form @submit.prevent="handleLogin">
           <select v-model="selectedRole">
-      <option value="general">General</option>
-      <option value="medical_provider_user">Medical Provider User</option>
-      <option value="doctor">Doctor</option>
-    </select>
+            <!-- <option value="general">General</option> -->
+            <option value="medical_provider_user">Medical Provider User</option>
+            <option value="doctor">Doctor</option>
+          </select>
 
 
           <div class="space-y-6">
@@ -88,7 +94,7 @@
               <label for="email" class="block text-sm font-medium text-gray-700">
                 Email address
               </label>
-              <input id="email" type="text" placeholder="Username or email address"
+              <input id="email" v-model="email" type="text" placeholder="Username or email address"
                 class="w-full h-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
             </div>
 
@@ -96,7 +102,7 @@
               <label for="password" class="block text-sm font-medium text-gray-700">
                 Password
               </label>
-              <input id="password" type="password" placeholder="Password"
+              <input id="password" v-model="password" type="password" placeholder="Password"
                 class="w-full h-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
             </div>
 
@@ -105,8 +111,8 @@
               Sign in
             </button>
             <div class="text-center">
-                <a href="#" class=" text-gray-500 text-sm">Forgot Password? <strong>Request for a reset</strong></a>
-              </div>
+              <a href="#" class=" text-gray-500 text-sm">Forgot Password? <strong>Request for a reset</strong></a>
+            </div>
           </div>
         </form>
       </div>
@@ -141,13 +147,14 @@ import { useRouter } from 'vue-router'
 import api from '@/services/axios' // using the new axios instance
 import { useUserStore } from '@/store/user'
 
-const selectedRole = ref('general')
+const selectedRole = ref('medical_provider_user')
 const email = ref('')
 const password = ref('')
 const userStore = useUserStore()
+const router = useRouter()
 
 const endpoints = {
-  general: '/login',
+  // general: '/login',
   medical_provider_user: 'medical-provider/login',
   doctor: '/doctor/login',
 }
@@ -162,9 +169,9 @@ const handleLogin = async () => {
     })
 
     switch (selectedRole.value) {
-      case 'general':
-        handleGeneralLoginResponse(data)
-        break
+      // case 'general':
+      //   handleGeneralLoginResponse(data)
+      //   break
       case 'medical_provider_user':
         handleMedicalProviderUserResponse(data)
         break
@@ -187,14 +194,26 @@ const handleGeneralLoginResponse = (data) => {
 }
 
 const handleMedicalProviderUserResponse = (data) => {
-  userStore.setToken(data.access_token)
-  userStore.setProviderUser(data.user)
-  userStore.setProviderId(data.provider_id)
+
+  console.log('user details', data.data.user.user)
+  // return
+  userStore.setToken(data.data.token)
+  userStore.setProviderUser(data.data.user.user)
+  userStore.setProviderId(data.data.user.medical_provider.id)
+  userStore.setMedicalProvider(data.data.user.medical_provider)
+  return router.push({ name: 'MedicalProviderDashboard' })
+
+
 }
 
 const handleDoctorLoginResponse = (data) => {
   userStore.setToken(data.token)
   userStore.setDoctorProfile(data.doctor)
+
+  const selected = localStorage.getItem('selected_provider_id')
+  if (!selected) {
+    return router.push({ name: 'SelectHospital' })
+  }
 }
 
 

@@ -5,29 +5,28 @@ export const useUserStore = defineStore('user', {
     user: null,
     doctorProfile: null,
     providerUser: null,
-    selectedProviderId: localStorage.getItem('selected_provider_id') || null,
-    token: localStorage.getItem('token') || null,
+    medicalProvider: null,
+    selectedProviderId: null,
+    token: null,
   }),
   actions: {
     setToken(token) {
       this.token = token
-      localStorage.setItem('token', token)
     },
     setUser(user) {
       this.user = user
-      localStorage.setItem('user', JSON.stringify(user))
     },
     setProviderUser(user) {
       this.providerUser = user
-      localStorage.setItem('provider_user', JSON.stringify(user))
     },
     setDoctorProfile(profile) {
       this.doctorProfile = profile
-      localStorage.setItem('doctor_profile', JSON.stringify(profile))
     },
     setProviderId(id) {
       this.selectedProviderId = id
-      localStorage.setItem('selected_provider_id', id)
+    },
+    setMedicalProvider(provider) {
+      this.medicalProvider = provider
     },
     reset() {
       this.user = null
@@ -35,7 +34,8 @@ export const useUserStore = defineStore('user', {
       this.providerUser = null
       this.selectedProviderId = null
       this.token = null
-      localStorage.clear()
     }
-  }
+  },
+
+  persist: true, // to enable persistence
 })
