@@ -1,3 +1,28 @@
+<style scoped>
+/* .login-page {
+  max-width: 700px;
+  margin: 100px auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+} */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
+}
+
+.padding-top-50{
+  padding-top: 30%;
+}
+/* width-100{
+
+} */
+</style>
+
 <template>
   <div class="w-full max-w-6xl mx-auto md:flex md:flex-row sm:flex-col min-h-screen">
     <!-- Left Section -->
@@ -50,7 +75,14 @@
           </p>
         </div>
 
-        <form>
+        <form @submit.prevent="handleLogin">
+          <select v-model="selectedRole">
+      <option value="general">General</option>
+      <option value="medical_provider_user">Medical Provider User</option>
+      <option value="doctor">Doctor</option>
+    </select>
+
+
           <div class="space-y-6">
             <div class="space-y-2">
               <label for="email" class="block text-sm font-medium text-gray-700">
@@ -106,71 +138,64 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import api from '@/services/axios' // using the new axios instance
+import { useUserStore } from '@/store/user'
 
+const selectedRole = ref('general')
 const email = ref('')
 const password = ref('')
-const error = ref('')
-const loading = ref(false)
-const router = useRouter()
+const userStore = useUserStore()
 
-async function handleLogin() {
-  loading.value = true
-  error.value = ''
+const endpoints = {
+  general: '/login',
+  medical_provider_user: 'medical-provider/login',
+  doctor: '/doctor/login',
+}
 
-  // Dummy login logic
+const handleLogin = async () => {
+  const endpoint = endpoints[selectedRole.value]
+
   try {
-    // Simulate login response from API
-    const response = {
-      user: {
-        id: 1,
-        name: 'Dr. John Doe',
-        role: email.value.includes('doctor') ? 'doctor' : 'admin', // Simulate roles
-      },
-      token: 'fake-jwt-token'
+    const { data } = await api.post(endpoint, {
+      email: email.value,
+      password: password.value,
+    })
+
+    switch (selectedRole.value) {
+      case 'general':
+        handleGeneralLoginResponse(data)
+        break
+      case 'medical_provider_user':
+        handleMedicalProviderUserResponse(data)
+        break
+      case 'doctor':
+        handleDoctorLoginResponse(data)
+        break
     }
 
-    localStorage.setItem('user', JSON.stringify(response.user))
-    localStorage.setItem('token', response.token)
-
-    // If doctor, check provider selection
-    if (response.user.role === 'doctor') {
-      const selected = localStorage.getItem('selected_provider_id')
-      if (!selected) {
-        return router.push({ name: 'SelectHospital' })
-      }
-    }
-
-    // Redirect to dashboard
-    router.push('/dashboard')
-  } catch (err) {
-    error.value = 'Invalid credentials'
-  } finally {
-    loading.value = false
+    // Optionally redirect here using Vue Router
+  } catch (error) {
+    const err = error.response?.data?.message || error.message
+    console.error('Login failed:', err)
   }
 }
+
+
+const handleGeneralLoginResponse = (data) => {
+  userStore.setToken(data.token)
+  userStore.setUser(data.user)
+}
+
+const handleMedicalProviderUserResponse = (data) => {
+  userStore.setToken(data.access_token)
+  userStore.setProviderUser(data.user)
+  userStore.setProviderId(data.provider_id)
+}
+
+const handleDoctorLoginResponse = (data) => {
+  userStore.setToken(data.token)
+  userStore.setDoctorProfile(data.doctor)
+}
+
+
 </script>
-
-<style scoped>
-/* .login-page {
-  max-width: 700px;
-  margin: 100px auto;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-} */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.error {
-  color: red;
-  margin-top: 1rem;
-}
-
-.padding-top-50{
-  padding-top: 30%;
-}
-/* width-100{
-
-} */
-</style>
