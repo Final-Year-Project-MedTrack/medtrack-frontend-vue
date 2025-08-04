@@ -1,85 +1,84 @@
+<!-- DashboardNav.vue -->
 <template>
-    <header class="w-full bg-white px-6 py-4 flex justify-between items-center">
+  <header class="w-full bg-white border-b border-gray-200 px-6 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Left: Logo + Dashboard Label -->
+      <div class="flex items-center gap-4">
+        <HomeIcon class="w-5 h-5 text-gray-500" />
+        <span class="text-lg font-semibold">Dashboard</span>
+        <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full uppercase">New</span>
+      </div>
 
+      <!-- Center: Search -->
+      <div class="flex-1 mx-8 max-w-md">
+        <div class="relative">
+          <MagnifyingGlassIcon class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
+          <input
+            type="text"
+            placeholder="Search here..."
+            class="w-full pl-10 pr-4 py-2 border-gray-100 rounded-lg text-sm focus:ring focus:ring-blue-100"
+          />
+        </div>
+      </div>
 
-        <nav class="w-full bg-white border-b border-gray-200">
-            <div class="w-full flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="https://flowbite.com/" class="flex items-center space-x-6 rtl:space-x-reverse">
-                    <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" /> -->
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap">Dashboard</span>
-                </a>
-                <div class="flex md:order-4">
-                    <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search"
-                        aria-expanded="false"
-                        class="md:hidden text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 me-1">
-                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                        <span class="sr-only">Search</span>
-                    </button>
-                    <div class="relative md:block">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                            <span class="sr-only">Search icon</span>
-                        </div>
-                        <input type="text" id="search-navbar"
-                            class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                            placeholder="Search here...">
-                    </div>
-                    <button data-collapse-toggle="navbar-search" type="button"
-                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                        aria-controls="navbar-search" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 17 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 1h15M1 7h15M1 13h15" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
-                    <div class="relative mt-3 md:hidden">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 " aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                        </div>
-                        <input type="text" id="search-navbar"
-                            class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                            placeholder="Search...">
-                    </div>
-                    <ul
-                        class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white ">
-                        <li>
-                            <a href="#"
-                                class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 "
-                                aria-current="page">Home</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">About</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Services</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+      <!-- Right: Notification + Profile Dropdown -->
+      <div class="flex items-center gap-4">
+        <BellIcon class="w-5 h-5 text-gray-500" />
 
-    </header>
+        <Menu as="div" class="relative">
+          <MenuButton class="focus:outline-none">
+            <img
+              src="https://ui-avatars.com/api/?name=Daniel&background=000000&color=ffffff"
+              class="w-8 h-8 rounded-full border-2 border-white ring-2 ring-green-500"
+              alt="User Avatar"
+            />
+          </MenuButton>
+          <Transition
+            enter="transition ease-out duration-100"
+            enter-from="transform opacity-0 scale-95"
+            enter-to="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leave-from="transform opacity-100 scale-100"
+            leave-to="transform opacity-0 scale-95"
+          >
+            <MenuItems class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
+              <MenuItem v-slot="{ active }">
+                <a :class="menuItemClass(active)" href="#">Profile</a>
+              </MenuItem>
+              <MenuItem v-slot="{ active }">
+                <a :class="menuItemClass(active)" href="#">Settings</a>
+              </MenuItem>
+              <MenuItem v-slot="{ active }">
+                <a :class="menuItemClass(active)" href="#">Logout</a>
+              </MenuItem>
+            </MenuItems>
+          </Transition>
+        </Menu>
+      </div>
+    </div>
+  </header>
 </template>
 
+<script setup>
+import {
+  BellIcon,
+  HomeIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/vue/24/outline'
 
-<script setup></script>
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
-<style scoped></style>
+function menuItemClass(active) {
+  return [
+    'block w-full text-left px-4 py-2 text-sm',
+    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+  ].join(' ')
+}
+</script>
+
+<style scoped>
+/* Optional: prevent avatar outline overlap */
+img {
+  object-fit: cover;
+}
+</style>

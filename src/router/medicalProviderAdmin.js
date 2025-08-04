@@ -8,6 +8,12 @@ export default [
         name: 'MedicalProviderDashboard',
         component: () => import('@/views/MedicalProviderAdmin/Dashboard/Dashboard.vue'),
       },
+
+      {
+        path: 'patients',
+        name: 'MedicalProviderDashboardPatients',
+        component: () => import('@/views/MedicalProviderAdmin/Dashboard/Patients.vue'),
+      },
     ],
   },
 ]

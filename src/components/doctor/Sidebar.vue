@@ -1,114 +1,98 @@
 <template>
-    <nav class="h-full flex-col justify-between overflow-y-auto p-4 rounded-[32px] border-gray-100 border-[1px] font-[14px] text-[#5f6a61]">
-        <div class="py-4">
-            <div class="mb-8 px-2">
-                <img src="../../assets/Page-heading-logo.png" alt=""></img>
-            </div>
-            <ul class="space-y-2 mt-8 pt-8">
-                <li class="h-[44px]">
-                    <a href="#"
-                        class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100  group">
-
-                        <router-link to="/doctor/dashboard"
-                            class="text-gray-300 flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 group">
-                            <i class="fa fa-home pr-4"></i> Dashboard</router-link>
-                    </a>
-                </li>
-
-                <li class="h-[44px]">
-                    <a href="#"
-                        class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100  group">
-
-                        <router-link to="/doctor/dashboard"
-                            class="text-gray-700 flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100  group">
-                            <i class="fa fa-users pr-4"></i>
-                            Patients
-                        </router-link>
-                    </a>
-                </li>
-
-                <li class="h-[44px]">
-                    <a href="#"
-                        class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 group">
-
-                        <router-link to="/doctor/dashboard"
-                            class="text-gray-700 flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 group">
-                            <i class="fa fa-home pr-4"></i> Providers</router-link>
-                    </a>
-                </li>
-
-                <li class="h-[44px]">
-                    <a href="#"
-                        class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 group">
-
-                        <router-link to="/doctor/dashboard"
-                            class="text-gray-700 flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 group">
-                            <i class="fa fa-home pr-4"></i> System Monitoring</router-link>
-                    </a>
-                </li>
-
-                <li class="h-[44px]">
-                    <a href="#"
-                        class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 group">
-
-                        <router-link to="/doctor/dashboard"
-                            class="text-gray-700 flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 group">
-                            <i class="fa fa-home pr-4"></i> Compliance</router-link>
-                    </a>
-                </li>
-
-
-
-            </ul>
+    <!-- Sidebar -->
+    <nav :class="[
+            'flex flex-col justify-between bg-white border border-gray-100 rounded-[32px] transition-all duration-300 overflow-hidden',
+            isCollapsed ? 'w-20' : 'w-64',
+            'fixed md:relative z-40 top-0 left-0 h-screen'
+        ]"
+        class="h-full flex-col justify-between overflow-y-auto p-4 rounded-[32px] border-gray-100 border-[1px] font-[14px] text-[#5f6a61]"
+    >
+        <!-- Logo and Toggle -->
+        <div class="p-4 flex justify-between items-center">
+            <img src="../../assets/Page-heading-logo.png" alt="Logo" class="w-auto h-8" />
+            <button @click="toggleSidebar" class="ml-auto p-2 hover:bg-gray-100 rounded">
+                <i :class="isCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-left'"></i>
+            </button>
         </div>
 
-        <div class="pt-32">
-                <ul class="pt-4 mt-4 space-y-2 font-medium">
-                    <li class="h-[44px]">
-                        <a href="#"
-                            class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
-                            <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#5f6a61] dark:group-hover:text-white"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                viewBox="0 0 17 20">
-                                <path
-                                    d="M7.958 19.393a7.7 7.7 0 0 1-6.715-3.439c-2.868-4.832 0-9.376.944-10.654l.091-.122a3.286 3.286 0 0 0 .765-3.288A1 1 0 0 1 4.6.8c.133.1.313.212.525.347A10.451 10.451 0 0 1 10.6 9.3c.5-1.06.772-2.213.8-3.385a1 1 0 0 1 1.592-.758c1.636 1.205 4.638 6.081 2.019 10.441a8.177 8.177 0 0 1-7.053 3.795Z" />
-                            </svg>
-                            <span class="ms-3">Settings</span>
-                        </a>
-                    </li>
-                    <li class="h-[44px]">
-                        <a href="#"
-                            class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
-                            <i
-                                class="fa fa-users shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#5f6a61] dark:group-hover:text-white"></i>
-                            <span class="ms-3">Help And Support</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200">
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-2 text-[#5f6a61] transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
-                            <div class="pt-3 flex">
-                                <div class="mr-3">
-                                    <img class="w-10 h-10 rounded-full"
-                                        src="https://images.unsplash.com/photo-1508002366005-75a695ee2d17?fm=jpg"
-                                        alt="Rounded avatar"></img>
-                                </div>
-                                <div>
-                                    <h2 class=" text-sm bold">Dr. Evelyn Opara</h2>
-                                    <p class=" text-sm">alison@rayna.ui</p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
+        <!-- Navigation Menu -->
+        <div class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <router-link to="/doctor/dashboard"
+                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-green-50 transition">
+                <i class="fa fa-home"></i>
+                <span v-if="!isCollapsed" class="ml-3 font-semibold">Dashboard</span>
+            </router-link>
 
-                </ul>
+            <router-link to="/doctor/patients"
+                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
+                <i class="fa fa-users"></i>
+                <span v-if="!isCollapsed" class="ml-3">Patients</span>
+            </router-link>
+
+            <router-link to="/doctor/visits"
+                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
+                <i class="fa fa-calendar-check-o"></i>
+                <span v-if="!isCollapsed" class="ml-3">Visits</span>
+            </router-link>
+
+            <router-link to="/doctor/records"
+                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
+                <i class="fa fa-file"></i>
+                <span v-if="!isCollapsed" class="ml-3">Medical records</span>
+            </router-link>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="p-4 space-y-4">
+            <div class="space-y-2">
+                <router-link to="/doctor/settings"
+                    class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
+                    <i class="fa fa-cog"></i>
+                    <span v-if="!isCollapsed" class="ml-3">Settings</span>
+                </router-link>
+
+                <router-link to="/doctor/help"
+                    class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition relative">
+                    <i class="fa fa-question-circle"></i>
+                    <span v-if="!isCollapsed" class="ml-3">Help and support</span>
+                    <span v-if="!isCollapsed"
+                        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-100 text-xs px-2 py-0.5 rounded-full">10</span>
+                </router-link>
             </div>
+
+            <!-- User Info -->
+            <router-link to="/doctor/profile"
+                class="flex items-center gap-3 p-2 border-t border-gray-200 pt-4 hover:bg-gray-100 transition">
+                <img class="w-10 h-10 rounded-full"
+                    src="https://images.unsplash.com/photo-1508002366005-75a695ee2d17?fm=jpg" alt="Rounded avatar" />
+                <div v-if="!isCollapsed" class="flex-1">
+                    <h2 class="text-sm font-medium">Alison Eyo</h2>
+                    <p class="text-xs text-gray-500">alison.e@rayna.ui</p>
+                </div>
+                <i v-if="!isCollapsed" class="fa fa-sign-out text-gray-400 ml-auto"></i>
+            </router-link>
+        </div>
     </nav>
 </template>
 
 
-<script setup></script>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const isCollapsed = ref(false)
+
+const toggleSidebar = () => {
+    isCollapsed.value = !isCollapsed.value
+}
+
+onMounted(() => {
+    if (window.innerWidth < 768) {
+        isCollapsed.value = true
+    }
+})
+</script>
+
+
 
 <style scoped></style>

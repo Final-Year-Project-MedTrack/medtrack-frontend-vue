@@ -4,6 +4,7 @@ module.exports = {
   content: [
     "./index.html",
     "./node_modules/flowbite/**/*.js",
+    "./node_modules/@headlessui/vue/**/*.{js,ts}",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
