@@ -17,19 +17,19 @@
 
         <!-- Navigation Menu -->
         <div class="flex-1 p-4 space-y-2 overflow-y-auto">
-            <router-link to="/doctor/dashboard"
+            <router-link to="/medical-provider/dashboard"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-green-50 transition">
                 <i class="fa fa-home"></i>
                 <span v-if="!isCollapsed" class="ml-3 font-semibold">Dashboard</span>
             </router-link>
 
-            <router-link to="/doctor/patients"
+            <router-link :to="{name: 'MedicalProviderDashboardPatients'}"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
                 <i class="fa fa-users"></i>
                 <span v-if="!isCollapsed" class="ml-3">Patients</span>
             </router-link>
 
-            <router-link to="/doctor/visits"
+            <router-link :to="{name: 'MedicalProviderDashboardVisits'}"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
                 <i class="fa fa-calendar-check-o"></i>
                 <span v-if="!isCollapsed" class="ml-3">Visits</span>
@@ -61,16 +61,21 @@
             </div>
 
             <!-- User Info -->
-            <router-link to="/doctor/profile"
+            <!-- <router-link to="/doctor/profile" -->
+             <div
                 class="flex items-center gap-3 p-2 border-t border-gray-200 pt-4 hover:bg-gray-100 transition">
                 <img class="w-10 h-10 rounded-full"
                     src="https://images.unsplash.com/photo-1508002366005-75a695ee2d17?fm=jpg" alt="Rounded avatar" />
                 <div v-if="!isCollapsed" class="flex-1">
-                    <h2 class="text-sm font-medium">Alison Eyo</h2>
-                    <p class="text-xs text-gray-500">alison.e@rayna.ui</p>
+                    <h2 v-if="userStore.user" class="text-sm font-medium">{{ userStore.user.first_name +' '+ userStore.user.last_name }}</h2>
+                    <h2 v-else class="text-sm font-medium">Alison Eyo</h2>
+
+                    <p v-if="userStore.user" class="text-xs text-gray-500">{{ userStore.user.email }}</p>
+                    <p v-else class="text-xs text-gray-500">alison.e@rayna.ui</p>
                 </div>
                 <i v-if="!isCollapsed" class="fa fa-sign-out text-gray-400 ml-auto"></i>
-            </router-link>
+            <!-- </router-link> -->
+            </div>
         </div>
     </nav>
 </template>
@@ -79,7 +84,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useUserStore } from '@/store/user'
 
+const userStore = useUserStore()
 const isCollapsed = ref(false)
 
 const toggleSidebar = () => {
