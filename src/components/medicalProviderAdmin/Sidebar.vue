@@ -34,12 +34,6 @@
                 <i class="fa fa-calendar-check-o"></i>
                 <span v-if="!isCollapsed" class="ml-3">Visits</span>
             </router-link>
-
-            <router-link to="/doctor/records"
-                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                <i class="fa fa-file"></i>
-                <span v-if="!isCollapsed" class="ml-3">Medical records</span>
-            </router-link>
         </div>
 
         <!-- Footer Actions -->

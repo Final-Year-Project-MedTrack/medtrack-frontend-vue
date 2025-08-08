@@ -20,6 +20,18 @@ export default [
         name: 'MedicalProviderDashboardVisits',
         component: () => import('@/views/MedicalProviderAdmin/Dashboard/Visits.vue'),
       },
+
+      {
+        path: 'visits/:visitId',
+        name: 'MedicalProviderDashboardViewVisits',
+        component: () => import('@/views/MedicalProviderAdmin/Dashboard/ViewVisit.vue'),
+      },
+
+      {
+        path: 'schedule-visit',
+        name: 'MedicalProviderDashboardScheduleVisit',
+        component: () => import('@/views/MedicalProviderAdmin/Dashboard/ScheduleVisit.vue'),
+      },
     ],
   },
 ]
