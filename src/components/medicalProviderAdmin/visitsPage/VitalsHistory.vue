@@ -2,7 +2,7 @@
   <div class="p-6 bg-white ">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold text-gray-800">Vitals History</h2>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
         + Record Vital
       </button>
     </div>
@@ -84,6 +84,7 @@ const props = defineProps({
   completed: String,
   trend: String,
   icon: String,
+  visit: Object
 })
 
 const icons = {

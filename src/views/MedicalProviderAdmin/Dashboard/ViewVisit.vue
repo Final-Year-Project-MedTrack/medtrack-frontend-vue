@@ -5,7 +5,7 @@
 
 
     <div v-if="loading" role="status"
-      class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center">
+      class="w-full space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center">
       <div class="flex items-center justify-center w-full h-48 bg-gray-300 rounded-sm sm:w-96 ">
         <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
           fill="currentColor" viewBox="0 0 20 18">
@@ -39,7 +39,7 @@
 
     <div v-if="loading" class="text-gray-500">
 
-      <div role="status" class="max-w-sm animate-pulse">
+      <div role="status" class="w-3/4 animate-pulse">
         <div class="h-2.5 bg-gray-200 rounded-full  w-48 mb-4"></div>
         <div class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></div>
         <div class="h-2 bg-gray-200 rounded-full  mb-2.5"></div>
@@ -62,6 +62,7 @@ import ViewVisitDashboardHeader from '@/components/medicalProviderAdmin/visitsPa
 import PatientProfile from '@/components/medicalProviderAdmin/visitsPage/PatientProfile.vue'
 import VisitOverview from '@/components/medicalProviderAdmin/visitsPage/VisitOverview.vue'
 import VitalsHistory from '@/components/medicalProviderAdmin/visitsPage/VitalsHistory.vue'
+import Diagnosis from '@/components/medicalProviderAdmin/visitsPage/Diagnosis.vue'
 
 const route = useRoute()
 const visitId = route.params.visitId
@@ -77,13 +78,12 @@ let visit = {
   // status: "loading"
 }
 
-// console.log(route.params.visitId, visitId)
 
 const tabs = [
   { name: 'visit-overview', label: 'Overview', component: VisitOverview, props: '' },
   { name: 'patient-profile', label: 'Profile', component: PatientProfile },
   { name: 'vitals-history', label: 'Vitals History', component: VitalsHistory },
-  { name: 'diagnosis', label: 'Diagnosis', component: VitalsHistory },
+  { name: 'diagnosis', label: 'Diagnosis', component: Diagnosis },
 ]
 
 const activeTab = ref('visit-overview')
