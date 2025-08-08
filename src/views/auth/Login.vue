@@ -198,6 +198,7 @@ const handleMedicalProviderUserResponse = (data) => {
   console.log('user details', data.data.user.user)
   // return
   userStore.setToken(data.data.token)
+  userStore.setUser(data.data.user.user)
   userStore.setProviderUser(data.data.user.user)
   userStore.setProviderId(data.data.user.medical_provider.id)
   userStore.setMedicalProvider(data.data.user.medical_provider)

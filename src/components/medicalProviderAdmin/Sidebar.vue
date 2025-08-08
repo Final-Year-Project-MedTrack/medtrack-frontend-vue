@@ -83,6 +83,7 @@ import { useUserStore } from '@/store/user'
 const userStore = useUserStore()
 const isCollapsed = ref(false)
 
+console.log(userStore.user)
 const toggleSidebar = () => {
     isCollapsed.value = !isCollapsed.value
 }
