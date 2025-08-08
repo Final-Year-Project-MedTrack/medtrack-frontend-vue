@@ -1,26 +1,27 @@
 <template>
-  <div class="p-6 space-y-6">
+  <div class="p-6  space-y-6">
     <!-- Header -->
-    <div class="flex flex-col md:flex-row  md:justify-between">
-      <div class="w-1/2">
+    <div class="md:flex pt-16 md:flex-row  md:justify-between">
+      <div class="">
         <h1 class="text-2xl font-bold">Patient management</h1>
         <p class="text-gray-500">Register new patients and view patient information</p>
       </div>
-      <div class="w-1/2 right">
-        <button class="mt-4 md:mt-0 bg-green-600 text-white py-2 px-4 rounded-md flex items-center">
+      <div class="">
+        <button class="mt-4 md:mt-0 bg-green-600 text-white p-3 px-4 rounded-md flex items-center">
         <i class="mr-2" v-html="registerIcon"></i>
         Register patient
       </button>
       </div>
     </div>
 
-    <!-- Search & Filter -->
+    <div class="border border-gray-100 p-4 rounded">
+      <!-- Search & Filter -->
     <div class="flex w-1/4 sm:flex-row items-center gap-4">
       <div class="relative w-3/4 sm:w-1/2">
-        <input type="text" placeholder="Search by name or ID..." v-model="search" class="w-full border border-gray-100 rounded-md px-4 py-2" />
         <span class="absolute right-3 top-2.5 text-gray-400">
           <i v-html="searchIcon"></i>
         </span>
+        <input type="text" placeholder="Search by name or ID..." v-model="search" class="w-full pl-2 border border-gray-100 rounded-md px-4 py-2" />
       </div>
       <div class="w-1/4">
         <button class="border border-gray-100 px-4 py-2 rounded-md flex items-center">
@@ -44,7 +45,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(patient, index) in patients" :key="index" class="border-t border-gray-100 hover:bg-gray-50">
+          <tr v-for="(patient, index) in patients" :key="index" class="border-b font-thin mt-5 border-gray-100 hover:bg-gray-50">
             <td class="p-3">{{ patient.nin }}</td>
             <td class="p-3 flex items-center gap-3">
               <img :src="patient.avatar" class="w-10 h-10 rounded-full" />
@@ -82,6 +83,7 @@
         </span>
         <button class="border border-gray-100 px-3 py-1 rounded-md">Next</button>
       </div>
+    </div>
     </div>
   </div>
 </template>
