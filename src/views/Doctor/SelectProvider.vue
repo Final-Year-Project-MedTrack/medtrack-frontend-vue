@@ -1,23 +1,36 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import api from '@/services/axios'
 
 const providers = ref([])
-const availableProviders = ref([])
 const unavailableProviders = ref([])
 const router = useRouter()
 
-onMounted(() => {
-    // Fetch from API I am using static data right now
-    providers.value = [
-        { id: 1, name: 'General Hospital' },
-        { id: 2, name: 'City Clinic' },
-    ]
+onMounted(async () => {
+    try {
+        providers.value = await api.get('doctors/fetch-medical-providers')
+        console.log(providers.value);
+        // visits.value = response.data.data.items.map((v) => ({
+        //     ...v,
+        //     dropdownOpen: false,
+        // }))
 
-    availableProviders.value = [
-        { id: 1, name: 'General Hospital' },
-        { id: 2, name: 'City Clinic' },
-    ]
+        // console.log(visits, response.data.items)
+    } catch (err) {
+        err.value = 'Failed to fetch Medical Providers'
+        console.error(err)
+    } finally {
+        loading.value = false
+    }
+
+
+    // Fetch from API I am using static data right now
+    // providers.value = [
+    //     { id: 1, name: 'General Hospital' },
+    //     { id: 2, name: 'City Clinic' },
+    // ]
+
 
     unavailableProviders.value = [
         { id: 1, name: 'General Hospital' },
@@ -25,6 +38,7 @@ onMounted(() => {
     ]
 })
 
+// fetch-medical-providers
 function selectProvider(provider) {
     localStorage.setItem('selected_provider_id', provider.id)
     // this.$router.push({ name: 'DoctorLoginToProvider' });

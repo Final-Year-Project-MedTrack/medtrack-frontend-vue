@@ -169,7 +169,7 @@ const err = ref('')
 const endpoints = {
   // general: '/login',
   medical_provider_user: 'medical-provider/login',
-  doctor: '/doctor/login',
+  doctor: 'auth/doctor/login',
 }
 
 const handleLogin = async () => {
@@ -193,8 +193,6 @@ const handleLogin = async () => {
         handleDoctorLoginResponse(data)
         break
     }
-
-    // Optionally redirect here using Vue Router
   } catch (error) {
     err.value = error.response?.data?.message || error.message
     console.error('Login failed:', err)
@@ -210,7 +208,7 @@ const handleGeneralLoginResponse = (data) => {
 
 const handleMedicalProviderUserResponse = (data) => {
 
-  console.log('user details', data.data.user.user)
+  
   // return
   userStore.setToken(data.data.token)
   userStore.setUser(data.data.user.user)
@@ -223,13 +221,10 @@ const handleMedicalProviderUserResponse = (data) => {
 }
 
 const handleDoctorLoginResponse = (data) => {
-  userStore.setToken(data.token)
-  userStore.setDoctorProfile(data.doctor)
 
-  const selected = localStorage.getItem('selected_provider_id')
-  if (!selected) {
-    return router.push({ name: 'SelectHospital' })
-  }
+  userStore.setToken(data.data.token)
+  userStore.setDoctorProfile(data.data.user.user)
+  return router.push({ name: 'DoctorSelectProvider' })
 }
 
 
