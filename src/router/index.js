@@ -7,6 +7,7 @@ import ValidateOTP from '@/views/auth/ValidateOTP.vue'
 
 
 const routes = [
+  { path: '/', redirect: '/login' },
   { path: '/login', name: 'Login', component: Login },
   { path: '/otp', name: 'OTP', component: ValidateOTP },
   ...doctorRoutes,
