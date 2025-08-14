@@ -71,7 +71,7 @@
     <div class="p-8 md:p-12 w-full md:w-1/2 md:flex items-center justify-center">
       <div class="w-full max-w-md bg-white rounded-3xl px-8">
 
-        <div class="mb-8 text-center py-12">
+        <div class="text-center py-12">
           <!-- <p class="text-gray-600 mb-1">
             Welcome back!
           </p> -->
@@ -82,13 +82,18 @@
         </div>
 
         <form @submit.prevent="handleLogin">
-          <select v-model="selectedRole" class="w-full h-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-            <!-- <option value="general">General</option> -->
-            <option value="medical_provider_user">Medical Provider User</option>
-            <option value="doctor">Doctor</option>
-          </select>
+          <div class="flex justify-center mb-8">
+              <select v-model="selectedRole" class=" w-auto mx-auto h-12  py-2 border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <!-- <option value="general">General</option> -->
+                <option value="medical_provider_user">Medical Provider User</option>
+                <option value="doctor">Doctor</option>
+              </select>
+          </div>
 
 
+          <div class="space-y-2 error text-red-400 py-2 flex justify-center" v-if="err">
+            <span>{{ err }}</span>
+          </div>
           <div class="space-y-6">
             <div class="space-y-2">
               <label for="email" class="block text-sm font-medium text-gray-700">
@@ -106,7 +111,13 @@
                 class="w-full h-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
             </div>
 
-            <button type="submit"
+            <button disabled v-if="loading"
+              class="w-full h-12 btn-main-green  text-white font-medium rounded-md transition duration-200">
+                  Signing in...
+            </button>
+
+            <button v-else
+              type="submit"
               class="w-full h-12 btn-main-green  text-white font-medium rounded-md transition duration-200">
               Sign in
             </button>
@@ -152,6 +163,8 @@ const email = ref('')
 const password = ref('')
 const userStore = useUserStore()
 const router = useRouter()
+const loading = ref(false)
+const err = ref('')
 
 const endpoints = {
   // general: '/login',
@@ -160,6 +173,7 @@ const endpoints = {
 }
 
 const handleLogin = async () => {
+  loading.value = true
   const endpoint = endpoints[selectedRole.value]
 
   try {
@@ -182,8 +196,9 @@ const handleLogin = async () => {
 
     // Optionally redirect here using Vue Router
   } catch (error) {
-    const err = error.response?.data?.message || error.message
+    err.value = error.response?.data?.message || error.message
     console.error('Login failed:', err)
+    loading.value = false
   }
 }
 

@@ -67,7 +67,7 @@
                     <p v-if="userStore.user" class="text-xs text-gray-500">{{ userStore.user.email }}</p>
                     <p v-else class="text-xs text-gray-500">alison.e@rayna.ui</p>
                 </div>
-                <i v-if="!isCollapsed" class="fa fa-sign-out text-gray-400 ml-auto"></i>
+                <i v-if="!isCollapsed" v-on:click="logout" class="fa fa-sign-out text-gray-400 ml-auto"></i>
             <!-- </router-link> -->
             </div>
         </div>
@@ -79,8 +79,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/store/user'
+import { useRouter } from 'vue-router'
+import api from '@/services/axios'
 
 const userStore = useUserStore()
+const router = useRouter()
 const isCollapsed = ref(false)
 
 console.log(userStore.user)
@@ -93,6 +96,19 @@ onMounted(() => {
         isCollapsed.value = true
     }
 })
+
+async function logout(){
+    try {
+        await api.post('auth/logout'); 
+
+        userStore.reset()
+        router.push({ name: 'Login' });
+    } catch (error) {
+        userStore.reset()
+        router.push({ name: 'Login' });
+        console.error('Logout failed:', error);
+    }
+}
 </script>
 
 
