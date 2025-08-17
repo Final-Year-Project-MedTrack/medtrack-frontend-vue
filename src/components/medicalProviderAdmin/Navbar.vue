@@ -49,7 +49,7 @@
                 <a :class="menuItemClass(active)" href="#">Settings</a>
               </MenuItem>
               <MenuItem v-slot="{ active }">
-                <a :class="menuItemClass(active)" href="#">Logout</a>
+                <a :class="menuItemClass(active)" v-on:click="logout">Logout</a>
               </MenuItem>
             </MenuItems>
           </Transition>
@@ -67,12 +67,31 @@ import {
 } from '@heroicons/vue/24/outline'
 
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/store/user'
+
+const userStore = useUserStore()
+const router = useRouter()
 
 function menuItemClass(active) {
   return [
     'block w-full text-left px-4 py-2 text-sm',
     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
   ].join(' ')
+}
+
+
+async function logout(){
+    try {
+        await api.post('auth/logout'); 
+
+        userStore.reset()
+        router.push({ name: 'Login' });
+    } catch (error) {
+        userStore.reset()
+        router.push({ name: 'Login' });
+        console.error('Logout failed:', error);
+    }
 }
 </script>
 

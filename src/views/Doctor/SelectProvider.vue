@@ -1,22 +1,21 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/store/user'
 import api from '@/services/axios'
 
+const userStore = useUserStore()
 const providers = ref([])
 const unavailableProviders = ref([])
 const router = useRouter()
+let providerCount = 0
 
 onMounted(async () => {
     try {
-        providers.value = await api.get('doctors/fetch-medical-providers')
+        let response = await api.get('doctors/fetch-medical-providers')
+        providers.value =response.data.data
+        providerCount = providers.value.length()
         console.log(providers.value);
-        // visits.value = response.data.data.items.map((v) => ({
-        //     ...v,
-        //     dropdownOpen: false,
-        // }))
-
-        // console.log(visits, response.data.items)
     } catch (err) {
         err.value = 'Failed to fetch Medical Providers'
         console.error(err)
@@ -24,27 +23,15 @@ onMounted(async () => {
         loading.value = false
     }
 
-
-    // Fetch from API I am using static data right now
-    // providers.value = [
-    //     { id: 1, name: 'General Hospital' },
-    //     { id: 2, name: 'City Clinic' },
-    // ]
-
-
     unavailableProviders.value = [
         { id: 1, name: 'General Hospital' },
         { id: 2, name: 'City Clinic' },
     ]
 })
 
-// fetch-medical-providers
 function selectProvider(provider) {
-    localStorage.setItem('selected_provider_id', provider.id)
-    // this.$router.push({ name: 'DoctorLoginToProvider' });
+    userStore.setProviderId(provider.medical_provider_id)
     router.push({ name: 'DoctorLoginToProvider' });
-
-
 }
 </script>
 
@@ -68,7 +55,7 @@ function selectProvider(provider) {
                 <!-- Available Providers -->
                 <div class="select-available-hospitals">
                     <div class="text-left m-4">
-                        <h2 class="text-2xl">Available Providers(2)</h2>
+                        <h2 class="text-2xl">Available Providers({{ providerCount }})</h2>
                     </div>
 
                     <div class="flex">
@@ -78,25 +65,26 @@ function selectProvider(provider) {
                                 <div>
                                     <div href="#" class="pb-5">
                                         <h5 class=" text-2xl tracking-tight text-gray-900">
-                                            {{ provider.name }}
+                                            {{ provider.medical_provider.name }}
                                         </h5>
                                         <div class="font-normal text-gray-500">
-                                            <i class="fa fa-users"></i> Hospital
+                                            <i class="fa fa-users"></i> {{provider.medical_provider.medical_provider_type}}
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
                                     <span
-                                        class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">Active</span>
+                                        class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">{{provider.medical_provider.status}}</span>
                                 </div>
                             </div>
 
 
                             <div class="provider-details font-normal text-gray-500 mb-5 pb-4">
                                 <div class="provider-location  mb-3">
-                                    <div><i class="fa fa-map-marker m-auto pr-5" aria-hidden="true"></i><span>Downtown
-                                            medical district</span></div>
+                                    <div><i class="fa fa-map-marker m-auto pr-5" aria-hidden="true"></i><span>
+                                        {{ provider.medical_provider.address +' ' + provider.medical_provider.lga + ' '+ provider.medical_provider.state }}
+                                    </span></div>
                                 </div>
 
                                 <div class="no-provider-patients mb-3">

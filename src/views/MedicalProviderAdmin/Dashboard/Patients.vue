@@ -7,16 +7,16 @@
         <p class="text-gray-500">Register new patients and view patient information</p>
       </div>
       <div class="">
-        <button class="mt-4 md:mt-0 bg-green-600 text-white p-3 px-4 rounded-md flex items-center">
-        <i class="mr-2" v-html="registerIcon"></i>
-        Register patient
-      </button>
+        <router-link :to="{name: 'MedicalProviderDashboardAddPatients'}" class="mt-4 md:mt-0 bg-green-600 text-white p-2 rounded-md flex items-center">
+          <i class="mr-2" v-html="registerIcon"></i>
+          Register patient
+        </router-link>
       </div>
     </div>
 
     <div class="border border-gray-100 p-4 rounded">
       <!-- Search & Filter -->
-    <div class="flex w-1/4 sm:flex-row items-center gap-4">
+    <div class="flex w-1/2 sm:flex-row items-center gap-4">
       <div class="relative w-3/4 sm:w-1/2">
         <span class="absolute right-3 top-2.5 text-gray-400">
           <i v-html="searchIcon"></i>
@@ -36,32 +36,32 @@
       <table class="min-w-full border-collapse mt-4">
         <thead class="bg-gray-100 text-left text-sm text-gray-600">
           <tr>
-            <th class="p-3">NIN</th>
-            <th class="p-3">Name</th>
-            <th class="p-3">Contact</th>
-            <th class="p-3">Last visit</th>
-            <th class="p-3">Next appointment</th>
-            <th class="p-3">Actions</th>
+            <th class="p-2">NIN</th>
+            <th class="p-2">Name</th>
+            <th class="p-2">Contact</th>
+            <th class="p-2">Last visit</th>
+            <th class="p-2">Next appointment</th>
+            <th class="p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(patient, index) in patients" :key="index" class="border-b font-thin mt-5 border-gray-100 hover:bg-gray-50">
-            <td class="p-3">{{ patient.nin }}</td>
-            <td class="p-3 flex items-center gap-3">
+          <tr v-for="(patient, index) in patients" :key="index" class="border-b text-sm font-thin mt-5 border-gray-100 hover:bg-gray-50">
+            <td class="py-3 px-2">{{ patient.nin }}</td>
+            <td class="py-3 px-2 flex items-center gap-3">
               <img :src="patient.avatar" class="w-10 h-10 rounded-full" />
               <div>
                 <p class="font-medium">{{ patient.name }}</p>
                 <p class="text-sm text-gray-500">{{ patient.role }}</p>
               </div>
             </td>
-            <td class="p-3">
+            <td class="py-3 px-2">
               <p>{{ patient.phone }}</p>
               <p class="text-sm text-gray-500">{{ patient.email }}</p>
             </td>
-            <td class="p-3">{{ patient.lastVisit }}</td>
-            <td class="p-3">{{ patient.nextAppointment }}</td>
-            <td class="p-3">
-              <button class="bg-gray-600 text-white px-4 py-2 rounded-md flex items-center">
+            <td class="py-3 px-2">{{ patient.lastVisit }}</td>
+            <td class="py-3 px-2">{{ patient.nextAppointment }}</td>
+            <td class="py-3 px-2">
+              <button class="bg-gray-600 text-white px-2 py-2 button rounded-md flex items-center">
                 <i class="mr-2" v-html="eyeIcon"></i>
                 View records
               </button>
@@ -97,7 +97,7 @@ const pages = [1, 2, 3, '...', 10, 11, 12]
 
 const patients = [
   {
-    nin: 'P001',
+    nin: 'P001162435',
     name: 'Abasifreke Nkanang',
     role: 'Primary Care Physician',
     phone: '+2348129285072',

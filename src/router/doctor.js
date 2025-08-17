@@ -23,7 +23,21 @@ export default [
         path: 'dashboard',
         name: 'DoctorDashboard',
         component: () => import('@/views/Doctor/Dashboard/Dashboard.vue'),
-        // meta: { requiresProvider: true }
+        meta: { requiresProvider: true }
+      },
+
+      {
+        path: 'visits',
+        name: 'DoctorDashboardVisits',
+        component: () => import('@/views/Doctor/Dashboard/Visits.vue'),
+        meta: { requiresProvider: true }
+      },
+
+      {
+        path: 'visits/:visitId',
+        name: 'DoctorDashboardViewVisits',
+        component: () => import('@/views/Doctor/Dashboard/ViewVisit.vue'),
+        meta: { requiresProvider: true }
       },
       // other doctor routes...
     ]

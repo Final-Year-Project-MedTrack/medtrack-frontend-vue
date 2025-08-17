@@ -130,26 +130,6 @@
     </div>
 
   </div>
-  <!-- <div class="login-page">
-    <h1>Login</h1>
-    <form @submit.prevent="handleLogin">
-      <div class="form-group">
-        <label>Email</label>
-        <input v-model="email" type="email" required />
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-        <input v-model="password" type="password" required />
-      </div>
-
-      <button type="submit" :disabled="loading">
-        {{ loading ? 'Logging in...' : 'Login' }}
-      </button>
-
-      <p v-if="error" class="error">{{ error }}</p>
-    </form>
-  </div> -->
 </template>
 
 <script setup>
@@ -222,6 +202,7 @@ const handleMedicalProviderUserResponse = (data) => {
 
 const handleDoctorLoginResponse = (data) => {
 
+  userStore.setUser(data.data.user.user)
   userStore.setToken(data.data.token)
   userStore.setDoctorProfile(data.data.user.user)
   return router.push({ name: 'DoctorSelectProvider' })
