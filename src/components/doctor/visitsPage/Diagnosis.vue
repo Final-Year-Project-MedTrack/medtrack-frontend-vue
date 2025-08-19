@@ -2,9 +2,9 @@
     <div class="p-6 bg-white ">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Medical Conditions</h2>
-            <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+            <router-link :to="{name: 'DoctorDashboardAddPatientMedicalCondition', params:{'patientId':visit.patient.id}}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
                 + Add Condition
-            </button>
+            </router-link>
         </div>
 
 

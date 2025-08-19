@@ -63,6 +63,7 @@ import PatientProfile from '@/components/doctor/visitsPage/PatientProfile.vue'
 import VisitOverview from '@/components/doctor/visitsPage/VisitOverview.vue'
 import VitalsHistory from '@/components/doctor/visitsPage/VitalsHistory.vue'
 import Diagnosis from '@/components/doctor/visitsPage/Diagnosis.vue'
+import MedicalRecords from '@/components/doctor/visitsPage/MedicalRecords.vue'
 import Allergies from '@/components/doctor/visitsPage/Allergies.vue'
 
 const route = useRoute()
@@ -85,6 +86,7 @@ const tabs = [
   { name: 'patient-profile', label: 'Profile', component: PatientProfile },
   { name: 'vitals-history', label: 'Vitals History', component: VitalsHistory },
   { name: 'diagnosis', label: 'Diagnosis', component: Diagnosis },
+  { name: 'medical-record', label: 'Medical Record', component: MedicalRecords },
   { name: 'allergies', label: 'Allergies', component: Allergies },
 ]
 

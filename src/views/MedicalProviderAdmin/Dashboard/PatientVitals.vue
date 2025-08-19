@@ -2,6 +2,9 @@
   <div class="p-6 bg-white ">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold text-gray-800">Vitals History</h2>
+      <router-link :to="{name: 'MedicalProviderDashboardRecordPatientVitals', params:{'patientId':patientId}}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+        + Record Vital
+      </router-link>
     </div>
 
     <div v-for="(record, index) in vitals" :key="index" class="mb-4 border border-gray-100 rounded-lg">
@@ -72,27 +75,21 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { CalendarPlus, Users, Activity, FileText } from 'lucide-vue-next'
+import { ref, computed, onMounted, reactive } from 'vue'
+import VitalsHistory from '@/components/medicalProviderAdmin/visitsPage/VitalsHistory.vue'
+import { useRoute, useRouter } from "vue-router";
+// import axios from "axios";
+import api from '@/services/axios'
+import { useUserStore } from '@/store/user'
 
-const props = defineProps({
-  title: String,
-  count: String,
-  completed: String,
-  trend: String,
-  icon: String,
-  visit: Object
-})
 
-const icons = {
-  'calendar-plus': CalendarPlus,
-  'users': Users,
-  'activity': Activity,
-  'file-text': FileText,
-}
-
-const iconComponent = computed(() => icons[props.icon])
+const route = useRoute();
+const router = useRouter();
+// const iconComponent = computed(() => icons[props.icon])
 const openIndex = ref(0)
+const patientId = route.params.patientId;
+const loading = ref(true)
+const error = ref(null)
 const vitals = ref([
   {
     date: '29/01/2024',
@@ -111,13 +108,24 @@ const vitals = ref([
   },
 ])
 
+
+onMounted(async () => {
+  try {
+    const response = await api.get('medical-provider/patient-vitals/get-patient-vitals/'+patientId)
+    vitals.value = response.data.data.items.map((v) => ({
+      ...v,
+    }))
+
+    // console.log(visits, response.data.items)
+  } catch (err) {
+    error.value = 'Failed to fetch Vitals'
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
+})
+
 const toggle = (index) => {
   openIndex.value = openIndex.value === index ? null : index
 }
 </script>
-
-<style scoped>
-.rotate-180 {
-  transform: rotate(180deg);
-}
-</style>

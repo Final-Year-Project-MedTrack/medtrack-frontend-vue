@@ -44,7 +44,7 @@
           <div class="relative">
             <button @click="toggleDropdown(index)"
               class="bg-gray-600 hover:bg-gray-200 text-white text-sm px-4 py-1 rounded-md">
-              {{ visit.dropdownOpen ? 'Close' : 'Check in' }}
+              {{ visit.dropdownOpen ? 'Close' : 'Actions' }}
             </button>
             <div v-if="visit.dropdownOpen" class="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-md border border-gray-100 z-10">
               <div class="px-4 pt-2">
@@ -52,13 +52,13 @@
               </div>
               <ul class=" text-sm text-gray-100">
                 <div class="py-4 pt-2 border-b border-gray-100">
-                  <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Check In + Record Vitals</li>
-                  <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Check In Only</li>
+                  <!-- <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Check In + Record Vitals</li> -->
+                  <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Admit</li>
                 </div>
-                <div class="py-4">
+                <!-- <div class="py-4">
                   <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-yellow-600">No Show</li>
                   <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600">Cancelled</li>
-                </div>
+                </div> -->
               </ul>
             </div>
           </div>

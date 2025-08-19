@@ -1,7 +1,10 @@
 <template>
     <div class="p-6 bg-white ">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold text-gray-800">Medical Conditions</h2>
+            <h2 class="text-xl font-semibold text-gray-800">Medical Records</h2>
+            <router-link :to="{name: 'DoctorDashboardAddPatientMedicalRecord', params:{'patientId':visit.patient.id, 'visitId':visit.id}}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+                + Add Medical Record
+            </router-link>
         </div>
 
 
@@ -45,7 +48,7 @@
             <span class="sr-only">Loading...</span>
         </div>
 
-        <div v-else-if="medicalConditions.length == 0">
+        <div v-else-if="medicalRecords.length == 0">
             <div class="mb-4 border border-gray-100 rounded-lg">
                 <div class=" p-8">
                     No Medical Condition Recorded
@@ -53,12 +56,12 @@
             </div>
         </div>
 
-        <div v-else v-for="(medicalCondition, index) in medicalConditions" :key="index" class="mb-4 border border-gray-100 rounded-lg">
+        <div v-else v-for="(medicalRecord, index) in medicalRecords" :key="index" class="mb-4 border border-gray-100 rounded-lg">
             <div class="p-4 flex justify-between items-center cursor-pointer" @click="toggle(index)">
                 <div>
-                    <h2>{{ medicalCondition.medical_condition.name }}</h2>
-                    <p class="text-sm text-gray-500">{{ medicalCondition.diagnosis_date }} at {{ medicalCondition.time }}</p>
-                    <p class="text-sm text-gray-600">Recorded by: {{ medicalCondition.diagnosed_by_user.first_name +' '+medicalCondition.diagnosed_by_user.last_name }}</p>
+                    <h2>{{ medicalRecord.record_type }}</h2>
+                    <p class="text-sm text-gray-500">{{ medicalRecord.created_at }}</p>
+                    <p class="text-sm text-gray-600">Recorded by: {{ medicalRecord.diagnosed_by_user.first_name +' '+medicalRecord.diagnosed_by_user.last_name }}</p>
                 </div>
                 <svg :class="{ 'rotate-180': openIndex === index }" class="w-5 h-5 transition-transform" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -68,24 +71,12 @@
 
             <div v-if="openIndex === index" class="p-4">
                 <div class="col-span-1 py-2">
-                    <p class="text-sm text-gray-500">Type:  Chronic <span class=" font-semibold text-gray-800">165 cm</span></p>
-                </div>
-
-                <div class="col-span-1 py-2">
-                    <p class="text-sm text-gray-500">Onset: <span class=" font-semibold text-gray-800">{{ medicalCondition.diagnosis_date }}</span></p>
-                </div>
-
-                <div class="col-span-1 py-2">
-                    <p class="text-sm text-gray-500">Diagnosed By: <span class="font-semibold text-gray-800">{{ medicalCondition.diagnosed_by_user.first_name +' '+medicalCondition.diagnosed_by_user.last_name }}</span></p>
-                </div>
-
-                <div class="col-span-1 py-2">
-                    <p class="text-sm text-gray-500">Severity: <span class=" font-semibold text-gray-800">{{medicalCondition.severity}}</span></p>
+                    <p class="text-sm text-gray-500">Diagnosed By: <span class="font-semibold text-gray-800">{{ medicalRecord.diagnosed_by_user.first_name +' '+medicalRecord.diagnosed_by_user.last_name }}</span></p>
                 </div>
 
                 <div class="col-span-full mt-4 p-4 bg-blue-200 rounded">
-                    <p class="text-sm text-gray-500">Notes</p>
-                    <p class="text-sm text-gray-700">{{medicalCondition.notes}}</p>
+                    <p class="text-sm text-gray-500">Data</p>
+                    <p class="text-sm text-gray-700">{{medicalRecord.record_data}}</p>
                 </div>
             </div>
         </div>
@@ -118,7 +109,7 @@ const openIndex = ref(0)
 const loading = ref(true)
 const error = ref(null)
 
-const medicalConditions = ref([])
+const medicalRecords = ref([])
 
 const toggle = (index) => {
     openIndex.value = openIndex.value === index ? null : index
@@ -127,8 +118,8 @@ const toggle = (index) => {
 
 onMounted(async () => {
     try {
-        const response = await api.get(`patient-conditions/patient-conditions/${props.visit.patient.id}/condition?medical_provider=1`)
-        medicalConditions.value = response.data.data.items
+        const response = await api.get(`patient-medical-record/patient-record/${props.visit.patient.id}/record`)
+        medicalRecords.value = response.data.data.items
     } catch (err) {
         error.value = 'Failed to fetch Visit Information'
         console.error(err)

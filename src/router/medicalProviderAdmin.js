@@ -34,6 +34,18 @@ export default [
       },
 
       {
+        path: 'record-patient-vitals/:patientId',
+        name: 'MedicalProviderDashboardRecordPatientVitals',
+        component: () => import('@/views/MedicalProviderAdmin/Dashboard/RecordPatientVitals.vue'),
+      },
+
+      {
+        path: 'patients/:patientId/vitals',
+        name: 'MedicalProviderDashboardRecordPatientVitals',
+        component: () => import('@/views/MedicalProviderAdmin/Dashboard/PatientVitals.vue'),
+      },
+
+      {
         path: 'schedule-visit',
         name: 'MedicalProviderDashboardScheduleVisit',
         component: () => import('@/views/MedicalProviderAdmin/Dashboard/ScheduleVisit.vue'),

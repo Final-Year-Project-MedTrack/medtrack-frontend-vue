@@ -2,9 +2,9 @@
   <div class="p-6 bg-white ">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold text-gray-800">Vitals History</h2>
-      <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+      <router-link :to="{name: 'MedicalProviderDashboardRecordPatientVitals', params:{'patientId':patient.id}}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
         + Record Vital
-      </button>
+      </router-link>
     </div>
 
     <div v-for="(record, index) in vitals" :key="index" class="mb-4 border border-gray-100 rounded-lg">

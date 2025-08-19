@@ -14,10 +14,10 @@
         <i class="fa fa-regular fa-heart"></i>
         Record vitals
       </button>
-      <button class="btn bg-green-500 p-2 px-3 m-2 border border-gray-200 rounded-lg text-white">
+      <router-link :to="{name: 'MedicalProviderDashboardScheduleVisit'}" class="btn bg-green-500 p-2 px-3 m-2 border border-gray-200 rounded-lg text-white">
         <i class="fa fa-bookmark"></i>
         New visit
-      </button>
+      </router-link>
     </div>
   </div>
 </template>

@@ -39,6 +39,18 @@ export default [
         component: () => import('@/views/Doctor/Dashboard/ViewVisit.vue'),
         meta: { requiresProvider: true }
       },
+      {
+        path: 'add-medical-condition/:patientId',
+        name: 'DoctorDashboardAddPatientMedicalCondition',
+        component: () => import('@/views/Doctor/Dashboard/AddMedicalCondition.vue'),
+      },
+
+
+      {
+        path: 'add-medical-record/:patientId/:visitId',
+        name: 'DoctorDashboardAddPatientMedicalRecord',
+        component: () => import('@/views/Doctor/Dashboard/AddMedicalRecord.vue'),
+      },
       // other doctor routes...
     ]
   }

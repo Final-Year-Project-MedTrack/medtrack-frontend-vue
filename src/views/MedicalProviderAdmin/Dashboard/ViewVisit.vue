@@ -63,6 +63,7 @@ import PatientProfile from '@/components/medicalProviderAdmin/visitsPage/Patient
 import VisitOverview from '@/components/medicalProviderAdmin/visitsPage/VisitOverview.vue'
 import VitalsHistory from '@/components/medicalProviderAdmin/visitsPage/VitalsHistory.vue'
 import Diagnosis from '@/components/medicalProviderAdmin/visitsPage/Diagnosis.vue'
+import Allergies from '@/components/medicalProviderAdmin/visitsPage/Allergies.vue'
 
 const route = useRoute()
 const visitId = route.params.visitId
@@ -84,6 +85,7 @@ const tabs = [
   { name: 'patient-profile', label: 'Profile', component: PatientProfile },
   { name: 'vitals-history', label: 'Vitals History', component: VitalsHistory },
   { name: 'diagnosis', label: 'Diagnosis', component: Diagnosis },
+  { name: 'allergies', label: 'Allergies', component: Allergies },
 ]
 
 const activeTab = ref('visit-overview')

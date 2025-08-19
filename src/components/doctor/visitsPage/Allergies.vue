@@ -61,7 +61,7 @@
                 <div>
                     <h2>{{ allergy.allergy.name }}</h2>
                     <!-- <p class="text-sm text-gray-500">{{ allergy.diagnosis_date }} at {{ medicalCondition.time }}</p> -->
-                    <p class="text-sm text-gray-600">Recorded by: {{ allergy.documented_by_user.first_name +' '+medicalCondition.documented_by_user.last_name }}</p>
+                    <p class="text-sm text-gray-600">Recorded by: {{ allergy.documented_by_user.first_name +' '+allergy.documented_by_user.last_name }}</p>
                 </div>
                 <svg :class="{ 'rotate-180': openIndex === index }" class="w-5 h-5 transition-transform" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="col-span-1 py-2">
-                    <p class="text-sm text-gray-500">Diagnosed By: <span class="font-semibold text-gray-800">{{ allergy.documented_by_user.first_name +' '+medicalCondition.documented_by_user.last_name }}</span></p>
+                    <p class="text-sm text-gray-500">Diagnosed By: <span class="font-semibold text-gray-800">{{ allergy.documented_by_user.first_name +' '+allergy.documented_by_user.last_name }}</span></p>
                 </div>
 
                 <div class="col-span-1 py-2">
