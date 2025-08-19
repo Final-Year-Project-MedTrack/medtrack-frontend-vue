@@ -53,7 +53,7 @@
               <ul class=" text-sm text-gray-100">
                 <div class="py-4 pt-2 border-b border-gray-100">
                   <!-- <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Check In + Record Vitals</li> -->
-                  <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Admit</li>
+                  <li @click="admitPatient(visit, index)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Admit</li>
                 </div>
                 <!-- <div class="py-4">
                   <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-yellow-600">No Show</li>
@@ -82,9 +82,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, getCurrentInstance } from 'vue';
 import api from '@/services/axios'
 
+const { proxy } = getCurrentInstance();
 const visits = ref([]);
 const loading = ref(true)
 const error = ref(null)
@@ -124,6 +125,29 @@ function badgeClass(status) {
       return 'text-xs px-2 py-0.5 rounded bg-yellow-100 text-yellow-800';
     default:
       return 'text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-800';
+  }
+}
+async function admitPatient(visit, index) {
+  try {
+    const response = await api.patch(`medical-provider/patient-visit/patient-visits/${visit.id}/in-patient`);
+    visits.value[index].status = response.data.data.status; // update status in UI
+    visits.value[index].dropdownOpen = false; // close dropdown
+    proxy.$swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Status updated successfully!',
+        timer: 3000,
+        timerProgressBar: true,
+      });
+  } catch (err) {
+    console.error("Failed to admit patient:", err);
+    proxy.$swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Error updating status: '+ error.response.data.message,
+        timer: 3000,
+        timerProgressBar: true,
+      });
   }
 }
 </script>

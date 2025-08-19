@@ -41,7 +41,7 @@ export default [
 
       {
         path: 'patients/:patientId/vitals',
-        name: 'MedicalProviderDashboardRecordPatientVitals',
+        name: 'MedicalProviderDashboardPatientVitals',
         component: () => import('@/views/MedicalProviderAdmin/Dashboard/PatientVitals.vue'),
       },
 

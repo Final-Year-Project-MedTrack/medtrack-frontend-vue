@@ -8,9 +8,10 @@
         <label class="block text-gray-700">Height (cm)</label>
         <input
           v-model="form.height"
-    
+          type="number"
+            step="0.1"
           decimal="2"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter height"
         />
       </div>
@@ -20,9 +21,10 @@
         <label class="block text-gray-700">Weight (kg)</label>
         <input
           v-model="form.weight"
-          
+          type="number"
+            step="0.1"
           decimal="2"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter weight"
         />
       </div>
@@ -32,8 +34,9 @@
         <label class="block text-gray-700">BMI</label>
         <input
           v-model="form.bmi"
-          
-          class="mt-1 w-full border rounded p-2"
+          type="number"
+          step="0.1"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter BMI"
         />
       </div>
@@ -45,7 +48,8 @@
           <input
             v-model="form.blood_pressure_systolic"
             type="number"
-            class="mt-1 w-full border rounded p-2"
+            step="0.1"
+            class="mt-1 w-full border border-gray-100 rounded p-2"
             placeholder="Systolic"
           />
         </div>
@@ -54,7 +58,8 @@
           <input
             v-model="form.blood_pressure_diastolic"
             type="number"
-            class="mt-1 w-full border rounded p-2"
+            step="0.1"
+            class="mt-1 w-full border border-gray-100 rounded p-2"
             placeholder="Diastolic"
           />
         </div>
@@ -67,7 +72,7 @@
           v-model="form.temperature"
           type="number"
           step="0.1"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter temperature"
         />
       </div>
@@ -78,7 +83,7 @@
         <input
           v-model="form.heart_rate"
           type="number"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter heart rate"
         />
       </div>
@@ -89,7 +94,8 @@
         <input
           v-model="form.respiratory_rate"
           type="number"
-          class="mt-1 w-full border rounded p-2"
+          step="0.1"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter respiratory rate"
         />
       </div>
@@ -99,8 +105,9 @@
         <label class="block text-gray-700">Oxygen Saturation (%)</label>
         <input
           v-model="form.oxygen_saturation"
-          
-          class="mt-1 w-full border rounded p-2"
+          type="number"
+          step="0.1"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter oxygen saturation"
         />
       </div>
@@ -113,7 +120,7 @@
           type="number"
           min="0"
           max="10"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter pain level"
         />
       </div>
@@ -124,7 +131,7 @@
         <input
           v-model="form.blood_glucose"
           type="number"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter blood glucose"
         />
       </div>
@@ -135,7 +142,7 @@
         <input
           v-model="form.urine_output"
           type="number"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Enter urine output"
         />
       </div>
@@ -145,7 +152,7 @@
         <label class="block text-gray-700">Notes</label>
         <textarea
           v-model="form.notes"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="Additional notes"
         ></textarea>
       </div>
@@ -156,7 +163,7 @@
         <input
           v-model="form.method_of_measurement"
           type="text"
-          class="mt-1 w-full border rounded p-2"
+          class="mt-1 w-full border border-gray-100 rounded p-2"
           placeholder="e.g. Manual, Digital Device"
         />
       </div>
@@ -165,7 +172,7 @@
       <div class="mt-6">
         <button
           type="submit"
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          class="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Save Vitals
         </button>
@@ -175,7 +182,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 import { useRoute, useRouter } from "vue-router";
 // import axios from "axios";
 import api from '@/services/axios'
@@ -185,6 +192,7 @@ const userStore = useUserStore()
 const route = useRoute();
 const router = useRouter();
 
+const { proxy } = getCurrentInstance();
 const patientId = route.params.patientId; // get patient_id from route param
 
 const form = ref({
@@ -210,11 +218,23 @@ const form = ref({
 const submitVitals = async () => {
   try {
     await api.post("/patient-vitals/patient-vitals", form.value);
-    alert("Patient vitals saved successfully");
+     proxy.$swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Patient Vitals saved successfully!',
+        timer: 3000,
+        timerProgressBar: true,
+      });
     router.push(`/medical-provider/patients/${patientId}/vitals`);
   } catch (error) {
     console.error(error);
-    alert("Error saving patient vitals");
+     proxy.$swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Error Saving vitals: '+ error.response.data.message,
+        timer: 3000,
+        timerProgressBar: true,
+      });
   }
 };
 </script>
