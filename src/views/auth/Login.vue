@@ -202,6 +202,8 @@ const handleMedicalProviderUserResponse = (data) => {
 
 const handleDoctorLoginResponse = (data) => {
 
+  // console.log(user);
+  // return;
   userStore.setUser(data.data.user.user)
   userStore.setToken(data.data.token)
   userStore.setDoctorProfile(data.data.user.user)

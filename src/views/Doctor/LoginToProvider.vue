@@ -140,7 +140,8 @@ const handleLogin = async () => {
         pin: password.value,
     })
 
-    console.log(data)
+    // console.log(data)
+    // return
 
     return router.push({ name: 'DoctorDashboard' })
   } catch (error) {

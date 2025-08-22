@@ -35,7 +35,7 @@
     </div>
 
     <!-- Patient details once selected -->
-    <div v-if="patient" class="mb-6 border p-4 rounded-lg bg-gray-50">
+    <div v-if="patient" class="mb-6 border border-gray-100 p-4 rounded-lg bg-gray-50">
       <p><strong>Name:</strong> {{ patient.first_name }} {{ patient.last_name }}</p>
       <p><strong>Email:</strong> {{ patient.email }}</p>
       <p><strong>NIN:</strong> {{ patient.national_id }}</p>
@@ -45,7 +45,7 @@
     <form v-if="patient" @submit.prevent="createVisit" class="space-y-4">
       <div>
         <label class="block text-sm font-medium">Visit Type</label>
-        <select v-model="form.visit_type" class="w-full border rounded-lg p-2">
+        <select v-model="form.visit_type" class="w-full border border-gray-100 rounded-lg p-2">
           <option value="emergency">Emergency</option>
           <option value="routine">Routine</option>
           <option value="follow-up">Follow Up</option>
@@ -76,7 +76,7 @@
 
       <div>
         <label class="block text-sm font-medium">Reason</label>
-        <textarea v-model="form.reason" class="w-full border rounded-lg p-2"></textarea>
+        <textarea v-model="form.reason" class="w-full border border-gray-100 rounded-lg p-2"></textarea>
       </div>
 
       <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg">

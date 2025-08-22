@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import DashboardHeader from '@/components/medicalProviderAdmin/dashboardPage/DashboardHeader.vue'
+import DashboardHeader from '@/components/doctor/dashboardPage/DashboardHeader.vue'
 import StatsCard from '@/components/medicalProviderAdmin/dashboardPage/StatsCard.vue'
 import PatientQueue from '@/components/medicalProviderAdmin/dashboardPage/PatientQueue.vue'
 import RecentActivities from '@/components/medicalProviderAdmin/dashboardPage/RecentActivities.vue'

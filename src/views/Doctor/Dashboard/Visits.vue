@@ -5,9 +5,7 @@
         <h1 class="text-2xl font-bold">Visit management</h1>
         <p class="text-sm text-gray-500">Manage patient appointments</p>
       </div>
-      <router-link :to="{name: 'MedicalProviderDashboardScheduleVisit'}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium">
-        Schedule visit
-      </router-link>
+      
     </div>
 
     <div class="flex flex-wrap gap-6 items-center">
