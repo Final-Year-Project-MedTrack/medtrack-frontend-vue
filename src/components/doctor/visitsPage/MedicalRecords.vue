@@ -74,6 +74,10 @@
                     <p class="text-sm text-gray-500">Diagnosed By: <span class="font-semibold text-gray-800">{{ medicalRecord.diagnosed_by_user.first_name +' '+medicalRecord.diagnosed_by_user.last_name }}</span></p>
                 </div>
 
+                <div class="p-6 space-y-6" v-if="medicalRecord.record_file !== null">
+                        <FileViewer fileUrl="/files/sample.pdf" />
+                </div>
+                
                 <div class="col-span-full mt-4 p-4 bg-blue-200 rounded">
                     <p class="text-sm text-gray-500">Data</p>
                     <p class="text-sm text-gray-700">{{medicalRecord.record_data}}</p>
@@ -87,6 +91,7 @@
 import { ref, onMounted, computed } from 'vue'
 import api from '@/services/axios'
 import { CalendarPlus, Users, Activity, FileText } from 'lucide-vue-next'
+import FileViewer from '@/components/FileViewer.vue'
 
 const props = defineProps({
     title: String,

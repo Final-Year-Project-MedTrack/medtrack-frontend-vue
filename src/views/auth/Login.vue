@@ -196,6 +196,8 @@ const handleMedicalProviderUserResponse = (data) => {
   userStore.setProviderId(data.data.user.medical_provider.id)
   userStore.setMedicalProvider(data.data.user.medical_provider)
   userStore.setMedicalProviderUserPriority(data.data.user.priority)
+
+  console.log(data.data.user.priority)
   return router.push({ name: 'MedicalProviderDashboard' })
 
 
