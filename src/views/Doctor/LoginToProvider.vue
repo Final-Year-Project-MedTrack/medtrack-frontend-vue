@@ -134,7 +134,7 @@ const handleLogin = async () => {
   loading.value = true
 
   try {
-    const { data } = await api.post('doctors/medical-provider/login', {
+    const { data } = await api.post('auth/doctor/medical-provider/login', {
         medical_provider_id:    userStore.selectedProviderId,
         doctor_id: userStore.doctorProfile.id,
         pin: password.value,
