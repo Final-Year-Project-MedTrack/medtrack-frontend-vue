@@ -28,6 +28,7 @@
                 <i class="fa fa-users"></i>
                 <span v-if="!isCollapsed" class="ml-3">Patients</span>
             </router-link> -->
+            <!-- <router-link v-if="user.medicalProviderUserPriority"></router-link> -->
 
             <router-link :to="{name: 'MedicalProviderDashboardVisits'}"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">

@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', {
     doctorProfile: null,
     providerUser: null,
     medicalProvider: null,
+    medicalProviderUserPriority: null,
     selectedProviderId: null,
     token: null,
   }),
@@ -28,10 +29,15 @@ export const useUserStore = defineStore('user', {
     setMedicalProvider(provider) {
       this.medicalProvider = provider
     },
+    setMedicalProviderUserPriority(priority) {
+      this.medicalProviderUserPriority = priority
+    },
     reset() {
       this.user = null
       this.doctorProfile = null
       this.providerUser = null
+      this.medicalProvider = null
+      this.medicalProviderUserPriority = null
       this.selectedProviderId = null
       this.token = null
     }
