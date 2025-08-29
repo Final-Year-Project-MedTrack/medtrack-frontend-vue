@@ -45,6 +45,12 @@ export default [
         component: () => import('@/views/Doctor/Dashboard/AddMedicalCondition.vue'),
       },
 
+      {
+        path: 'add-allergy/:patientId',
+        name: 'DoctorDashboardAddPatientAllergy',
+        component: () => import('@/views/Doctor/Dashboard/AddAllergy.vue'),
+      },
+
 
       {
         path: 'add-medical-record/:patientId/:visitId',

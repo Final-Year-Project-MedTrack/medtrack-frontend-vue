@@ -17,11 +17,11 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Diagnosis -->
         <div class="relative">
-          <label class="block text-sm font-medium text-gray-700">Diagnosis Name</label>
+          <label class="block text-sm font-medium text-gray-700">Allergy Name</label>
           <input
             type="text"
             v-model="query"
-            @input="searchConditions"
+            @input="searchAllergies"
             placeholder="Tap to search conditions"
             class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 sm:text-sm"
           />
@@ -36,7 +36,7 @@
               @click="selectCondition(condition)"
               class="px-4 py-2 hover:bg-green-50 cursor-pointer"
             >
-              {{ condition.name }}
+              {{ condition.name }} ({{ condition.icd }})
             </li>
           </ul>
         </div>
@@ -81,7 +81,7 @@
 
       <!-- Reason for Visit -->
       <div>
-        <label class="block text-sm font-medium text-gray-700">Notes</label>
+        <label class="block text-sm font-medium text-gray-700">Reason for Visit</label>
         <textarea
           v-model="form.notes"
           rows="3"
@@ -130,9 +130,9 @@ const patientId = route.params.patientId;
 
 const form = reactive({
     patient_id: patientId,
-    medical_condition_id: null,
+    allergy_id: null,
     diagnosis: "",
-    icd_10_code: "",
+    reaction: "",
     diagnosis_date: "",
     severity: "Emergency",
     notes: "",
@@ -141,26 +141,26 @@ const form = reactive({
 });
 
 // API Search
-const searchConditions = async () => {
+const searchAllergies = async () => {
   if (query.value.length < 3) {
     results.value = [];
     return;
   }
 
   try {
-    const response = await api.get(`medical-condition?search=${query.value}`);
+    const response = await api.get(`allergies?search=${query.value}`);
     results.value = response.data.data.items; // Assuming API returns [{id, name, icd}]
   } catch (error) {
-    console.error("Error fetching conditions", error);
+    console.error("Error fetching Allergies", error);
   }
 };
 
 // Select an item
-const selectCondition = (condition) => {
-  form.medical_condition_id = condition.id;
-  form.diagnosis = condition.name;
+const selectCondition = (allergy) => {
+  form.allergy_id = allergy.id;
+  form.diagnosis = allergy.allergy_name;
   form.icd_10_code = condition.icd_10_code;
-  query.value = condition.name;
+  query.value = allergy.allergy_name;
   results.value = [];
 };
 
@@ -170,12 +170,12 @@ const submitForm = async () => {
     proxy.$swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: 'Condition saved successfully!',
+        text: 'Allergy saved successfully!',
         timer: 3000,
         timerProgressBar: true,
       });
   } catch (error) {
-    console.error("Error saving condition", error);
+    console.error("Error saving Allergy", error);
   }
 };
 
