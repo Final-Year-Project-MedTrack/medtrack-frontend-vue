@@ -75,9 +75,9 @@
                 </div>
 
                 <div class="p-6 space-y-6" v-if="medicalRecord.record_file !== null">
-                        <FileViewer fileUrl="/files/sample.pdf" />
+                        <FileViewer :fileUrl=medicalRecord.record_file />
                 </div>
-                
+
                 <div class="col-span-full mt-4 p-4 bg-blue-200 rounded">
                     <p class="text-sm text-gray-500">Data</p>
                     <p class="text-sm text-gray-700">{{medicalRecord.record_data}}</p>
