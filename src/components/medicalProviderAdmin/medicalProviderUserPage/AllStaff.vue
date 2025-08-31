@@ -87,7 +87,7 @@ async function fetchStaffs() {
     })
 
     staffs.value = response.data.data.items
-    totalPages.value = response.data.data.pagination.total_pages
+    totalPages.value = response.data.data.meta.pagination.total_pages
   } catch (err) {
     error.value = 'Failed to fetch Staff'
     console.error(err)
