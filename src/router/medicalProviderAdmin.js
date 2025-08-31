@@ -14,7 +14,7 @@ export default [
         path: "/staff",
         name: "MedicalProviderDashboardStaff",
         component: () =>
-          import("@/views/MedicalProviderAdmin/Dashboard/StaffManagement.vue"),
+          import("@/views/MedicalProviderAdmin/Dashboard/StaffManagement/StaffManagement.vue"),
         
         children: [
           { 
@@ -47,6 +47,20 @@ export default [
               ),
           },
         ],
+      },
+
+      {
+        path: "add-doctor",
+        name: "MedicalProviderDashboardAddDoctor",
+        component: () =>
+          import("@/views/MedicalProviderAdmin/Dashboard/StaffManagement/AddDoctorToMedicalProvider.vue"),
+      },
+
+      {
+        path: "add-staff",
+        name: "MedicalProviderDashboardAddStaff",
+        component: () =>
+          import("@/views/MedicalProviderAdmin/Dashboard/StaffManagement/AddStaffToMedicalProvider.vue"),
       },
 
       {
