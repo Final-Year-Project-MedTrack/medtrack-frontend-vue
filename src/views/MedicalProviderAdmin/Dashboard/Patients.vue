@@ -46,24 +46,23 @@
         </thead>
         <tbody>
           <tr v-for="(patient, index) in patients" :key="index" class="border-b text-sm font-thin mt-5 border-gray-100 hover:bg-gray-50">
-            <td class="py-3 px-2">{{ patient.nin }}</td>
+            <td class="py-3 px-2">{{ patient.user.national_id }}</td>
             <td class="py-3 px-2 flex items-center gap-3">
-              <img :src="patient.avatar" class="w-10 h-10 rounded-full" />
+              <img v-if="patient.avatar" :src="patient.avatar" class="w-10 h-10 rounded-full" />
               <div>
-                <p class="font-medium">{{ patient.name }}</p>
-                <p class="text-sm text-gray-500">{{ patient.role }}</p>
+                <p class="font-medium">{{ patient.user.name }}</p>
               </div>
             </td>
             <td class="py-3 px-2">
-              <p>{{ patient.phone }}</p>
-              <p class="text-sm text-gray-500">{{ patient.email }}</p>
+              <p>{{ patient.user.phone }}</p>
+              <p class="text-sm text-gray-500">{{ patient.user.email }}</p>
             </td>
             <td class="py-3 px-2">{{ patient.lastVisit }}</td>
             <td class="py-3 px-2">{{ patient.nextAppointment }}</td>
             <td class="py-3 px-2">
               <button class="bg-gray-600 text-white px-2 py-2 button rounded-md flex items-center">
-                <i class="mr-2" v-html="eyeIcon"></i>
-                View records
+                <!-- <i class="mr-2" v-html="eyeIcon"></i>
+                View records -->
               </button>
             </td>
           </tr>
@@ -89,31 +88,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, reactive } from 'vue';
+import api from '@/services/axios'
+import { useUserStore } from '@/store/user'
 
 const search = ref('')
 const currentPage = ref(3)
 const pages = [1, 2, 3, '...', 10, 11, 12]
+const userStore = useUserStore()
+const patients = ref([]);
 
-const patients = [
-  {
-    nin: 'P001162435',
-    name: 'Abasifreke Nkanang',
-    role: 'Primary Care Physician',
-    phone: '+2348129285072',
-    email: 'abas@gmail.com',
-    avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
-    lastVisit: '25/1/2024 13:00:00',
-    nextAppointment: '25/1/2024 13:00:00'
-  },
-  // repeat the same object for demo purpose
-  // in real case, fetch from API or Vuex store
-]
+// const patients = [
+//   {
+//     nin: 'P001162435',
+//     name: 'Abasifreke Nkanang',
+//     role: 'Primary Care Physician',
+//     phone: '+2348129285072',
+//     email: 'abas@gmail.com',
+//     avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+//     lastVisit: '25/1/2024 13:00:00',
+//     nextAppointment: '25/1/2024 13:00:00'
+//   },
+//   // repeat the same object for demo purpose
+//   // in real case, fetch from API or Vuex store
+// ]
 
 const searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>`
 const filterIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-6 6V21l-4-2v-8.293l-6-6A1 1 0 013 4z" /></svg>`
 const registerIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>`
 const eyeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>`
+
+
+
+onMounted(async () => {
+  try {
+    const response = await api.get(`medical-provider/patients/patients?medical_provider=${userStore.selectedProviderId}`)
+    patients.value = response.data.data.items.map((v) => ({
+      ...v,
+      dropdownOpen: false,
+    }))
+
+    // console.log(visits, response.data.items)
+  } catch (err) {
+    err.value = 'Failed to fetch visits'
+  } finally {
+    loading.value = false
+  }
+})
+
+
 </script>
 
 <style scoped>

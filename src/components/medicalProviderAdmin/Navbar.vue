@@ -5,8 +5,8 @@
       <!-- Left: Logo + Dashboard Label -->
       <div class="flex items-center gap-4">
         <HomeIcon class="w-5 h-5 text-gray-500" />
-        <span class="text-lg font-semibold">Dashboard</span>
-        <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full uppercase">staff</span>
+        <span class="text-lg font-semibold">Medical Provider Dashboard</span>
+        <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full uppercase">{{returnUserPriorityName()}}</span>
       </div>
 
       <!-- Center: Search -->
@@ -78,6 +78,15 @@ function menuItemClass(active) {
     'block w-full text-left px-4 py-2 text-sm',
     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
   ].join(' ')
+}
+
+function returnUserPriorityName() {
+  const roles = {
+    1: 'Admin',
+    2: 'Medical Staff',
+    3: 'Front Desk'
+  }
+  return roles[userStore.medicalProviderUserPriority] || 'Unknown'
 }
 
 

@@ -84,14 +84,16 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
 import api from '@/services/axios'
+import { useUserStore } from '@/store/user'
 
 const visits = ref([]);
 const loading = ref(true)
 const error = ref(null)
+const userStore = useUserStore()
 
 onMounted(async () => {
   try {
-    const response = await api.get('medical-provider/patient-visit/patient-visit?medical_provider=1')
+    const response = await api.get(`medical-provider/patient-visit/patient-visit?medical_provider=${userStore.selectedProviderId}`)
     visits.value = response.data.data.items.map((v) => ({
       ...v,
       dropdownOpen: false,
