@@ -128,7 +128,7 @@ const toggle = (index) => {
 
 onMounted(async () => {
     try {
-        const response = await api.get(`allergies/allergies/${props.visit.patient.id}/allergy`)
+        const response = await api.get(`patient-allergies/allergies/${props.visit.patient.id}/allergy`)
         allergies.value = response.data.data.items
     } catch (err) {
         error.value = 'Failed to fetch Visit Information'

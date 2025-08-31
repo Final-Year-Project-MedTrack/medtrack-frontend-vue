@@ -7,9 +7,9 @@
     </div>
 
     <!-- Header -->
-    <h2 class="text-xl font-semibold text-gray-800">Medical Condition</h2>
+    <h2 class="text-xl font-semibold text-gray-800">Add Allergy</h2>
     <p class="text-gray-500 text-sm mb-6">
-      Complete vital signs assessment for Patient
+      Add allergies for Patient
     </p>
 
     <!-- Form -->
@@ -31,24 +31,23 @@
             class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg max-h-48 overflow-y-auto"
           >
             <li
-              v-for="condition in results"
-              :key="condition.id"
-              @click="selectCondition(condition)"
+              v-for="allergy in results"
+              :key="allergy.id"
+              @click="selectCondition(allergy)"
               class="px-4 py-2 hover:bg-green-50 cursor-pointer"
             >
-              {{ condition.name }} ({{ condition.icd }})
+              {{ allergy.allergy_name }}
             </li>
           </ul>
         </div>
 
         <!-- ICD Code -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">ICD-10 Code</label>
+          <label class="block text-sm font-medium text-gray-700">Reaction</label>
           <input
             type="text"
-            v-model="form.icd"
-            placeholder="Automatically Updates"
-            readonly
+            v-model="form.reaction"
+            placeholder="What is the patients reaction to the allergy?"
             class="mt-1 block w-full bg-gray-100 rounded-lg border border-gray-300 sm:text-sm"
           />
         </div>
@@ -58,7 +57,7 @@
           <label class="block text-sm font-medium text-gray-700">Diagnosis Date</label>
           <input
             type="date"
-            v-model="form.diagnosis_date"
+            v-model="form.documented_date"
             class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 sm:text-sm"
           />
         </div>
@@ -71,7 +70,6 @@
             class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 sm:text-sm"
           >
             <option value="">Select severity</option>
-            <option value="stage 3">Stage 3</option>
             <option value="mild">Mild</option>
             <option value="moderate">Moderate</option>
             <option value="severe">Severe</option>
@@ -81,7 +79,7 @@
 
       <!-- Reason for Visit -->
       <div>
-        <label class="block text-sm font-medium text-gray-700">Reason for Visit</label>
+        <label class="block text-sm font-medium text-gray-700">Any extra notes?</label>
         <textarea
           v-model="form.notes"
           rows="3"
@@ -131,13 +129,11 @@ const patientId = route.params.patientId;
 const form = reactive({
     patient_id: patientId,
     allergy_id: null,
-    diagnosis: "",
     reaction: "",
-    diagnosis_date: "",
-    severity: "Emergency",
+    severity: "",
     notes: "",
-    diagnosed_by_user_id : userStore.user.id,
-    medical_provider_id: userStore.selectedProviderId
+    documented_by_user_id : userStore.user.id,
+    documented_date: "",
 });
 
 // API Search
@@ -148,7 +144,7 @@ const searchAllergies = async () => {
   }
 
   try {
-    const response = await api.get(`allergies?search=${query.value}`);
+    const response = await api.get(`allergy?search=${query.value}`);
     results.value = response.data.data.items; // Assuming API returns [{id, name, icd}]
   } catch (error) {
     console.error("Error fetching Allergies", error);
@@ -158,15 +154,13 @@ const searchAllergies = async () => {
 // Select an item
 const selectCondition = (allergy) => {
   form.allergy_id = allergy.id;
-  form.diagnosis = allergy.allergy_name;
-  form.icd_10_code = condition.icd_10_code;
   query.value = allergy.allergy_name;
   results.value = [];
 };
 
 const submitForm = async () => {
   try {
-    await api.post("/patient-conditions/patient-conditions", form);
+    await api.post("/patient-allergies/patient-allergies", form);
     proxy.$swal.fire({
         icon: 'success',
         title: 'Success!',
