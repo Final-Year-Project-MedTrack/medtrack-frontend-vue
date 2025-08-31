@@ -59,12 +59,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 import api from '@/services/axios'
 import { useUserStore } from '@/store/user'
 
 const userStore = useUserStore()
-
+const { proxy } = getCurrentInstance();
 const doctorSearch = ref("")
 const doctorResults = ref([])
 const loadingDoctors = ref(false)
@@ -93,6 +93,13 @@ const searchDoctors = async () => {
     })
 
     doctorResults.value = data
+    proxy.$swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Doctor added successfully!',
+        timer: 3000,
+        timerProgressBar: true,
+      });
   } catch (err) {
     console.error("Failed to fetch doctors", err)
   } finally {
@@ -121,6 +128,13 @@ const submit = async () => {
   } catch (err) {
     console.error("Failed to add doctor", err)
     alert("Something went wrong while adding doctor.")
+    proxy.$swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Error adding  doctor: '+ error.response.data.message,
+        timer: 3000,
+        timerProgressBar: true,
+      });
   }
 }
 </script>

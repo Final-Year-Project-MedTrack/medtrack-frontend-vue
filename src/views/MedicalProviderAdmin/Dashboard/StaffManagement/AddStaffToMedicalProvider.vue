@@ -53,10 +53,11 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, getCurrentInstance } from 'vue'
 import api from '@/services/axios'
 import { useUserStore } from '@/store/user'
 
+const { proxy } = getCurrentInstance();
 const userStore = useUserStore()
 const search = ref('')
 const userResults = ref([])
@@ -114,6 +115,13 @@ async function addStaff() {
     })
 
     alert('Staff added successfully!')
+    proxy.$swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Staff added successfully!',
+        timer: 3000,
+        timerProgressBar: true,
+      });
 
     search.value = ''
     userResults.value = []
@@ -123,6 +131,13 @@ async function addStaff() {
   } catch (error) {
     console.error('Error adding staff', error)
     alert('Error adding staff')
+    proxy.$swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Error Adding Staff '+ error.response.data.message,
+        timer: 3000,
+        timerProgressBar: true,
+      });
   }
 }
 </script>
