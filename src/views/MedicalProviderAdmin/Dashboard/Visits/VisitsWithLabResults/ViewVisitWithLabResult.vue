@@ -58,38 +58,22 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import api from '@/services/axios'
-import ViewVisitDashboardHeader from '@/components/doctor/visitsPage/ViewVisitDashboardHeader.vue'
-import PatientProfile from '@/components/doctor/visitsPage/PatientProfile.vue'
-import VisitOverview from '@/components/doctor/visitsPage/VisitOverview.vue'
-import VitalsHistory from '@/components/doctor/visitsPage/VitalsHistory.vue'
-import Diagnosis from '@/components/doctor/visitsPage/Diagnosis.vue'
-import MedicalRecords from '@/components/doctor/visitsPage/MedicalRecords.vue'
-import Allergies from '@/components/doctor/visitsPage/Allergies.vue'
-import ViewVisitHistory from '@/components/doctor/visitsPage/ViewVisitHistory.vue'
+import ViewVisitDashboardHeader from '@/components/medicalProviderAdmin/visitsPage/ViewVisitDashboardHeader.vue'
+import VisitOverview from '@/components/medicalProviderAdmin/visitsPage/VisitOverview.vue'
+import MedicalRecords from '@/components/medicalProviderAdmin/medicalRecord/FetchMedicalRecordsWithLabResult.vue'
 
 const route = useRoute()
 const visitId = route.params.visitId
 const loading = ref(true)
 const error = ref(null)
 let visit = {
-  // id: 1,
-  // medical_provider: {},
   patient: {},
-  // visit_type: "follow-up",
-  // admission_date: "2025-08-02 14:01:01",
-  // discharge_date: null,
-  // status: "loading"
 }
 
 
 const tabs = [
   { name: 'visit-overview', label: 'Overview', component: VisitOverview, props: '' },
-  { name: 'patient-profile', label: 'Profile', component: PatientProfile },
-  { name: 'vitals-history', label: 'Vitals History', component: VitalsHistory },
-  { name: 'diagnosis', label: 'Diagnosis', component: Diagnosis },
   { name: 'medical-record', label: 'Medical Record', component: MedicalRecords },
-  { name: 'allergies', label: 'Allergies', component: Allergies },
-  { name: 'ViewVisitHistory', label: 'View Visit History', component: ViewVisitHistory },
 ]
 
 const activeTab = ref('visit-overview')

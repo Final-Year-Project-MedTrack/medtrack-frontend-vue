@@ -69,6 +69,7 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
+import api from '@/services/axios'
 
 const userStore = useUserStore()
 const router = useRouter()

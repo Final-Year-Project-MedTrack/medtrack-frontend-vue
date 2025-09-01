@@ -60,6 +60,7 @@
 
 <script setup>
 import { ref, getCurrentInstance } from "vue";
+import { useRouter } from 'vue-router'
 import api from '@/services/axios'
 import { useUserStore } from '@/store/user'
 
@@ -68,6 +69,7 @@ const { proxy } = getCurrentInstance();
 const doctorSearch = ref("")
 const doctorResults = ref([])
 const loadingDoctors = ref(false)
+const router = useRouter()
 
 const form = ref({
   doctor_id: "",

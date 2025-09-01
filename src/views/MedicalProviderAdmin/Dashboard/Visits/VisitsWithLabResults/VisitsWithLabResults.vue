@@ -2,10 +2,9 @@
   <div class="p-6 space-y-6">
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold">Visit management</h1>
+        <h1 class="text-2xl font-bold">Visit With Lab Results</h1>
         <p class="text-sm text-gray-500">Manage patient appointments</p>
       </div>
-      
     </div>
 
     <div class="flex flex-wrap gap-6 items-center">
@@ -50,9 +49,8 @@
               </div>
               <ul class=" text-sm text-gray-100">
                 <div class="py-4 pt-2 border-b border-gray-100">
-                  <!-- <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Check In + Record Vitals</li> -->
-                  <li v-if="visit.status == 'in_patient'" @click="changePatientToOutPatient(visit, index)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Change to out Patient</li>
-                  <li v-else @click="admitPatient(visit, index)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Admit</li>
+                  <router-link :to="{name: 'MedicalProviderDashboardRecordPatientVitals', params:{'patientId':visit.patient.id}}" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Check In + Record Vitals</router-link>
+                  <!-- <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Check In Only</li> -->
                 </div>
                 <!-- <div class="py-4">
                   <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-yellow-600">No Show</li>
@@ -70,7 +68,7 @@
             <p class="text-sm text-gray-600">{{ visit.reason }}</p>
           </div>
           <div class="">
-            <router-link :to="{'name': 'DoctorDashboardViewVisits', 'params': {'visitId': visit.id}}" class=" border border-gray-600 rounded p-2 my-4 right-0 text-sm text-gray-600 hover:underline">
+            <router-link :to="{'name': 'MedicalProviderDashboardViewVisitWithLabResults', 'params': {'visitId': visit.id}}" class=" border border-gray-600 rounded p-2 my-4 right-0 text-sm text-gray-600 hover:underline">
               View medical record →
             </router-link>
           </div>
@@ -81,11 +79,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, getCurrentInstance } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import api from '@/services/axios'
 import { useUserStore } from '@/store/user'
 
-const { proxy } = getCurrentInstance();
 const visits = ref([]);
 const loading = ref(true)
 const error = ref(null)
@@ -93,7 +90,7 @@ const userStore = useUserStore()
 
 onMounted(async () => {
   try {
-    const response = await api.get(`medical-provider/patient-visit/patient-visit?medical_provider=${userStore.selectedProviderId}`)
+    const response = await api.get(`medical-provider/patient-visit/patient-visits-with-lab-results?medical_provider=${userStore.selectedProviderId}`)
     visits.value = response.data.data.items.map((v) => ({
       ...v,
       dropdownOpen: false,
@@ -126,53 +123,6 @@ function badgeClass(status) {
       return 'text-xs px-2 py-0.5 rounded bg-yellow-100 text-yellow-800';
     default:
       return 'text-xs px-2 py-0.5 rounded bg-gray-100 text-gray-800';
-  }
-}
-async function admitPatient(visit, index) {
-  try {
-    const response = await api.patch(`medical-provider/patient-visit/patient-visits/${visit.id}/in-patient`);
-    visits.value[index].status = response.data.data.status; // update status in UI
-    visits.value[index].dropdownOpen = false; // close dropdown
-    proxy.$swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Status updated successfully!',
-        timer: 3000,
-        timerProgressBar: true,
-      });
-  } catch (err) {
-    console.error("Failed to admit patient:", err);
-    proxy.$swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Error updating status: '+ error.response.data.message,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-  }
-}
-
-async function changePatientToOutPatient(visit, index) {
-  try {
-    const response = await api.patch(`medical-provider/patient-visit/patient-visits/${visit.id}/out-patient`);
-    visits.value[index].status = response.data.data.status; // update status in UI
-    visits.value[index].dropdownOpen = false; // close dropdown
-    proxy.$swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Status updated successfully!',
-        timer: 3000,
-        timerProgressBar: true,
-      });
-  } catch (err) {
-    console.error("Failed to admit patient:", err);
-    proxy.$swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Error updating status: '+ error.response.data.message,
-        timer: 3000,
-        timerProgressBar: true,
-      });
   }
 }
 </script>

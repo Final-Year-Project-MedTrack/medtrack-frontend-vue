@@ -78,17 +78,31 @@ export default [
       },
 
       {
+        path: "visits-with-lab-result",
+        name: "MedicalProviderDashboardVisitsWithLabResults",
+        component: () =>
+          import("@/views/MedicalProviderAdmin/Dashboard/Visits/VisitsWithLabResults/VisitsWithLabResults.vue"),
+      },
+
+      {
+        path: "visits-with-lab-result/:visitId",
+        name: "MedicalProviderDashboardViewVisitWithLabResults",
+        component: () =>
+          import("@/views/MedicalProviderAdmin/Dashboard/Visits/VisitsWithLabResults/ViewVisitWithLabResult.vue"),
+      },
+
+      {
         path: "visits",
         name: "MedicalProviderDashboardVisits",
         component: () =>
-          import("@/views/MedicalProviderAdmin/Dashboard/Visits.vue"),
+          import("@/views/MedicalProviderAdmin/Dashboard/Visits/Visits.vue"),
       },
 
       {
         path: "visits/:visitId",
         name: "MedicalProviderDashboardViewVisits",
         component: () =>
-          import("@/views/MedicalProviderAdmin/Dashboard/ViewVisit.vue"),
+          import("@/views/MedicalProviderAdmin/Dashboard/Visits/ViewVisit.vue"),
       },
 
       {
@@ -96,7 +110,7 @@ export default [
         name: "MedicalProviderDashboardRecordPatientVitals",
         component: () =>
           import(
-            "@/views/MedicalProviderAdmin/Dashboard/RecordPatientVitals.vue"
+            "@/views/MedicalProviderAdmin/Dashboard/PatientVitals/RecordPatientVitals.vue"
           ),
       },
 
@@ -104,14 +118,14 @@ export default [
         path: "patients/:patientId/vitals",
         name: "MedicalProviderDashboardPatientVitals",
         component: () =>
-          import("@/views/MedicalProviderAdmin/Dashboard/PatientVitals.vue"),
+          import("@/views/MedicalProviderAdmin/Dashboard/PatientVitals/PatientVitals.vue"),
       },
 
       {
         path: "schedule-visit",
         name: "MedicalProviderDashboardScheduleVisit",
         component: () =>
-          import("@/views/MedicalProviderAdmin/Dashboard/ScheduleVisit.vue"),
+          import("@/views/MedicalProviderAdmin/Dashboard/Visits/ScheduleVisit.vue"),
       },
     ],
   },

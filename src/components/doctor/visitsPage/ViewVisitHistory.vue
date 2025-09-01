@@ -2,28 +2,10 @@
   <div class="p-6 space-y-6">
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold">Visit management</h1>
-        <p class="text-sm text-gray-500">Manage patient appointments</p>
+        <h1 class="text-2xl font-bold">All Patient Visits</h1>
       </div>
       
     </div>
-
-    <div class="flex flex-wrap gap-6 items-center">
-      <input type="text" placeholder="Search here..."
-        class="border border-gray-100 p-2 rounded-md flex-grow max-w-sm" />
-      <select class="border border-gray-100 p-2 rounded-md">
-        <option>All visits</option>
-        <option>Physical therapy</option>
-        <option>Follow-up</option>
-      </select>
-      <select class="border border-gray-100 p-2 px-4 rounded-md">
-        <option>All status</option>
-        <option>Urgent</option>
-        <option>Normal</option>
-        <option>Medium</option>
-      </select>
-    </div>
-
     <div class="space-y-4">
       <div v-if="loading" class="text-gray-500">Loading visits...</div>
       <div v-else-if="error" class="text-red-600">Error: {{ error }}</div>
@@ -93,7 +75,7 @@ const userStore = useUserStore()
 
 onMounted(async () => {
   try {
-    const response = await api.get(`medical-provider/patient-visit/patient-visit?medical_provider=${userStore.selectedProviderId}`)
+    const response = await api.get(`medical-provider/patient-visit/patient-visits/get-patient-history?patient_id=${userStore.selectedProviderId}`)
     visits.value = response.data.data.items.map((v) => ({
       ...v,
       dropdownOpen: false,

@@ -35,9 +35,10 @@
 
       <select v-model="priority" class="border border-gray-100 p-2 rounded w-full" @click.stop>
         <option value="" disabled>Select priority</option>
-        <option value="1">1 (Highest)</option>
-        <option value="2">2</option>
-        <option value="3">3 (Lowest)</option>
+        <option value="1">Provider Admin</option>
+        <option value="2">Nurse</option>
+        <option value="3">Lab Attendant</option>
+        <option value="4">Non Medical Personnel</option>
       </select>
     </div>
 
@@ -54,6 +55,7 @@
 
 <script setup>
 import { ref, watch, getCurrentInstance } from 'vue'
+import { useRouter } from 'vue-router'
 import api from '@/services/axios'
 import { useUserStore } from '@/store/user'
 
@@ -64,6 +66,7 @@ const userResults = ref([])
 const selectedUser = ref(null)
 const priority = ref(null)
 const showDropdown = ref(false)
+const router = useRouter()
 
 let timeout = null
 
@@ -116,7 +119,6 @@ async function addStaff() {
       medical_provider_id: userStore.selectedProviderId
     })
 
-    alert('Staff added successfully!')
     proxy.$swal.fire({
         icon: 'success',
         title: 'Success!',

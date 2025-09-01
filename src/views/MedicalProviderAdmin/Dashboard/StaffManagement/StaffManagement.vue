@@ -3,14 +3,15 @@
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-semibold">Staff Management</h1>
-      <div class="flex gap-2">
+      <!-- <div class="flex gap-2">
         <button class="px-4 py-2 border border-gray-100 rounded-md">Export CSV</button>
-        <button @click="open = !open" class="px-4 py-2 bg-green-600 text-white rounded-md">
+        <button @click="toggleDropdown" class="px-4 py-2 bg-green-600 text-white rounded-md">
           Add new user
         </button>
 
-        <!-- Dropdown Menu -->
+        Dropdown Menu
         <div v-if="open"
+          @click.outside="closeDropdown"
           class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
           <div class="py-1">
             <router-link :to="{name: 'MedicalProviderDashboardAddDoctor'}" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -22,7 +23,39 @@
           </div>
         </div>
 
-      </div>
+      </div> -->
+
+      <router-link :to="{ name: 'MedicalProviderDashboardAddDoctor' }">
+        Add Doctor
+      </router-link>
+
+      <router-link :to="{ name: 'MedicalProviderDashboardAddStaff' }">
+        Add Staff
+      </router-link>
+
+       <div class="flex gap-2">
+        <FwbDropdown placement="bottom-end">
+          <template #trigger>
+          <button class="px-4 py-2 bg-green-600 text-white rounded-md">
+      Add new user
+    </button>
+  </template>
+
+  <div class="py-1">
+    <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+      <router-link :to="{ name: 'MedicalProviderDashboardAddDoctor' }">
+        Add Doctor
+      </router-link>
+    </div>
+
+    <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+      <router-link :to="{ name: 'AddStaffToMedicalProvider' }">
+        Add Staff
+      </router-link>
+    </div>
+  </div>
+</FwbDropdown>
+       </div>
     </div>
 
     <!-- Stats -->
@@ -53,14 +86,15 @@
 
 <script setup>
 import { ref } from "vue"
+import { FwbDropdown } from 'flowbite-vue'
 
 const open = ref(false)
 
-// close when clicking outside
-function handleClickOutside(event) {
-  if (!event.target.closest(".relative")) {
-    open.value = false
-  }
+const toggleDropdown = () => {
+  open.value = !open.value
 }
-document.addEventListener("click", handleClickOutside)
+
+const closeDropdown = () => {
+  open.value = false
+}
 </script>
