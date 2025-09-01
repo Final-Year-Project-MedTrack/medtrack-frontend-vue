@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-semibold">Staff Management</h1>
       <div class="flex gap-2">
-        <button class="px-4 py-2 border rounded-md">Export CSV</button>
+        <button class="px-4 py-2 border border-gray-100 rounded-md">Export CSV</button>
         <button @click="open = !open" class="px-4 py-2 bg-green-600 text-white rounded-md">
           Add new user
         </button>
@@ -34,15 +34,15 @@
     </div>
 
     <!-- Tabs -->
-    <div class="border-b mb-4 flex gap-6">
-      <router-link :to="{ name: 'MedicalProviderDashboardStaffAllStaff' }" class="pb-2 border-b-2"
-        active-class="border-green-600 text-green-600">All Staff</router-link>
+    <div class="border-b border-gray-100 mb-4 flex gap-6">
+      <router-link :to="{ name: 'MedicalProviderDashboardStaffAllStaff' }" class="pb-2 border-b"
+        active-class="border-green-100 text-green-600">All Staff</router-link>
 
-      <router-link :to="{ name: 'MedicalProviderDashboardStaffDoctors' }" class="pb-2 border-b-2"
-        active-class="border-green-600 text-green-600">Doctors</router-link>
-
-      <router-link :to="{ name: 'MedicalProviderDashboardStaffAllStaff' }" class="pb-2 border-b-2"
-        active-class="border-green-600 text-green-600">Provider Staff</router-link>
+      <router-link :to="{ name: 'MedicalProviderDashboardStaffDoctors' }" class="pb-2 border-b"
+        active-class="border-green-100 text-green-600">Doctors</router-link>
+<!-- 
+      <router-link :to="{ name: 'MedicalProviderDashboardStaffAllStaff' }" class="pb-2 border-b"
+        active-class="border-green-100 text-green-600">Provider Staff</router-link> -->
     </div>
 
     <!-- Render active component -->

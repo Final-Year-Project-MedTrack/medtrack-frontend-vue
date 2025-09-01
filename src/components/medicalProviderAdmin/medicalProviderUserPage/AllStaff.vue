@@ -7,15 +7,15 @@
         v-model="search"
         @input="fetchStaffs"
         placeholder="Search here..."
-        class="border px-3 py-2 rounded-md w-1/3"
+        class="border border-gray-100 px-3 py-2 rounded-md w-1/3"
       />
-      <button class="border px-4 py-2 rounded-md">Filter</button>
+      <button class="border border-gray-200 px-4 py-2 rounded-md">Filter</button>
     </div>
 
     <!-- Staff Table -->
     <table class="w-full border-collapse">
       <thead>
-        <tr class="text-left border-b">
+        <tr class="text-left border-b border-gray-100">
           <th class="p-2">Name</th>
           <th class="p-2">ID</th>
           <th class="p-2">Email</th>
@@ -24,9 +24,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="staff in staffs" :key="staff.id" class="border-b">
+        <tr v-for="staff in staffs" :key="staff.id" class="border-b border-gray-100">
           <td class="p-2 flex items-center gap-2">
-            <img :src="staff.avatar ?? '/default-avatar.png'" class="w-8 h-8 rounded-full" />
+            <!-- <img :src="staff.avatar ?? '/default-avatar.png'" class="w-8 h-8 rounded-full" /> -->
             {{ staff.user.first_name }}
           </td>
           <td class="p-2">#{{ staff.id }}</td>
@@ -42,7 +42,7 @@
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-4">
       <button 
-        class="px-3 py-1 border rounded-md"
+        class="px-3 py-1 border border-gray-100 rounded-md"
         :disabled="page <= 1"
         @click="changePage(page - 1)"
       >

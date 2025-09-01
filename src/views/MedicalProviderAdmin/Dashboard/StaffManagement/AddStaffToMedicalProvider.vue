@@ -5,7 +5,7 @@
       v-model="search"
       type="text"
       placeholder="Search by NIN or name"
-      class="border p-2 w-full rounded"
+      class="border border-gray-100 p-2 w-full rounded"
       @focus="showDropdown = userResults.length > 0"
       @blur="hideDropdown"
     />
@@ -13,7 +13,7 @@
     <!-- Search results dropdown -->
     <ul
       v-if="showDropdown && userResults.length"
-      class="absolute z-10 bg-white border mt-1 w-full rounded shadow max-h-48 overflow-y-auto"
+      class="absolute z-10 bg-white border border-gray-100 mt-1 w-full rounded shadow max-h-48 overflow-y-auto"
     >
       <li
         v-for="user in userResults"
@@ -33,7 +33,7 @@
         ({{ selectedUser.national_id }})
       </div>
 
-      <select v-model="priority" class="border p-2 rounded w-full" @click.stop>
+      <select v-model="priority" class="border border-gray-100 p-2 rounded w-full" @click.stop>
         <option value="" disabled>Select priority</option>
         <option value="1">1 (Highest)</option>
         <option value="2">2</option>
@@ -44,7 +44,7 @@
     <!-- Submit button -->
     <button
       @click="addStaff"
-      class="mt-3 px-4 py-2 bg-blue-600 text-white rounded-md"
+      class="mt-3 px-4 py-2 bg-green-600 text-white rounded-md"
       :disabled="!selectedUser || !priority"
     >
       Add Staff
@@ -92,7 +92,9 @@ watch(search, (newSearch) => {
 // select user
 function selectUser(user) {
   selectedUser.value = user
-  search.value = `${user.first_name} ${user.last_name}`
+//   search.value = `${user.first_name} ${user.last_name}`
+  search.value = "" 
+  userResults.value = []
   showDropdown.value = false
 }
 
@@ -128,6 +130,9 @@ async function addStaff() {
     selectedUser.value = null
     priority.value = null
     showDropdown.value = false
+
+    return router.push({ name: 'MedicalProviderDashboardStaffAllStaff' })
+
   } catch (error) {
     console.error('Error adding staff', error)
     alert('Error adding staff')

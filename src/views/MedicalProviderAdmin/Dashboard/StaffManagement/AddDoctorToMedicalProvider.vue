@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white rounded shadow">
+  <div class="p-4 bg-white rounded">
     <h2 class="text-lg font-semibold mb-4">Add Doctor to Medical Provider</h2>
 
     <!-- Doctor Search -->
@@ -8,13 +8,13 @@
         type="text"
         v-model="doctorSearch"
         @input="searchDoctors"
-        class="w-full border px-3 py-2 rounded"
+        class="w-full border border-gray-100 px-3 py-2 rounded"
         placeholder="Search doctors..."
       />
 
       <ul
         v-if="doctorResults.length"
-        class="absolute z-10 bg-white border mt-1 w-full rounded shadow max-h-48 overflow-y-auto"
+        class="absolute z-10 bg-white border border-gray-100 mt-1 w-full rounded shadow max-h-48 overflow-y-auto"
       >
         <li
           v-for="doctor in doctorResults"
@@ -33,7 +33,7 @@
       <input
         type="text"
         v-model="form.pin"
-        class="w-full border rounded px-3 py-2"
+        class="w-full border border-gray-100 rounded px-3 py-2"
         placeholder="Enter hospital PIN"
       />
     </div>
@@ -44,14 +44,14 @@
       <input
         type="text"
         v-model="form.role"
-        class="w-full border rounded px-3 py-2"
+        class="w-full border border-gray-100 rounded px-3 py-2"
         placeholder="e.g. Consultant, Resident..."
       />
     </div>
 
     <button
       @click="submit"
-      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
     >
       Add Doctor
     </button>
@@ -92,14 +92,8 @@ const searchDoctors = async () => {
       },
     })
 
-    doctorResults.value = data
-    proxy.$swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Doctor added successfully!',
-        timer: 3000,
-        timerProgressBar: true,
-      });
+    console.log(data.data)
+    doctorResults.value = data.data
   } catch (err) {
     console.error("Failed to fetch doctors", err)
   } finally {
@@ -115,8 +109,7 @@ const selectDoctor = (doctor) => {
 
 const submit = async () => {
   try {
-    await api.post(`/medical-providers/doctor`, form.value)
-    alert("Doctor added successfully!")
+    await api.post(`/medical-provider/doctor`, form.value)
 
     form.value = { 
       doctor_id: "", 
@@ -125,9 +118,17 @@ const submit = async () => {
       role: "" 
     }
     doctorSearch.value = ""
+    proxy.$swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Doctor added successfully!',
+        timer: 3000,
+        timerProgressBar: true,
+      });
+
+    return router.push({ name: 'MedicalProviderDashboardStaffDoctors' })
   } catch (err) {
     console.error("Failed to add doctor", err)
-    alert("Something went wrong while adding doctor.")
     proxy.$swal.fire({
         icon: 'error',
         title: 'Error!',
