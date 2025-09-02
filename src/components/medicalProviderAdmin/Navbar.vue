@@ -28,10 +28,11 @@
         <Menu as="div" class="relative">
           <MenuButton class="focus:outline-none">
             <img
-              src="https://ui-avatars.com/api/?name=Daniel&background=000000&color=ffffff"
+              :src="'https://ui-avatars.com/api/?name=' + userStore.user.first_name + '&background=000000&color=ffffff'"
               class="w-8 h-8 rounded-full border-2 border-white ring-2 ring-green-500"
               alt="User Avatar"
             />
+
           </MenuButton>
           <Transition
             enter="transition ease-out duration-100"
@@ -85,7 +86,8 @@ function returnUserPriorityName() {
   const roles = {
     1: 'Admin',
     2: 'Medical Staff',
-    3: 'Front Desk'
+    3: 'Lab',
+    4: 'Front Desk'
   }
   return roles[userStore.medicalProviderUserPriority] || 'Unknown'
 }

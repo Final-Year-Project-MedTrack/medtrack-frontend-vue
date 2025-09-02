@@ -31,9 +31,22 @@
           </td>
           <td class="p-2">#{{ staff.id }}</td>
           <td class="p-2">{{ staff.user.email }}</td>
-          <td class="p-2">{{ staff.priority ?? 'N/A' }}</td>
+          <td class="p-2">{{ priority[staff.priority] ?? 'N/A' }}</td>
           <td class="p-2">
-            <button class="px-2">...</button>
+            <!-- <button class="px-2">...</button> -->
+             <button 
+              class="px-2 text-blue-500"
+              @click="openPriorityModal(staff)"
+            >
+              Change Priority
+            </button>
+            <button 
+              class="px-2 text-red-500"
+              @click="confirmDelete(staff)"
+            >
+              Delete
+            </button>
+
           </td>
         </tr>
       </tbody>
@@ -60,13 +73,49 @@
       </button>
     </div>
   </div>
+
+
+  <!-- Priority Modal -->
+    <div 
+      v-if="showModal"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-md w-96">
+        <h2 class="text-lg font-semibold mb-4">Change Priority</h2>
+        <select v-model="selectedPriority" class="border rounded-md p-2 w-full">
+          <option 
+            v-for="(label, value) in priority" 
+            :key="value" 
+            :value="value"
+          >
+            {{ label }}
+          </option>
+        </select>
+        <div class="flex justify-end gap-2 mt-4">
+          <button 
+            class="px-4 py-2 border rounded-md"
+            @click="closeModal"
+          >
+            Cancel
+          </button>
+          <button 
+            class="px-4 py-2 bg-green-600 text-white rounded-md"
+            @click="updatePriority"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, getCurrentInstance } from 'vue';
 import api from '@/services/axios'
 import { useUserStore } from '@/store/user'
+import Swal from 'sweetalert2'
 
+const { proxy } = getCurrentInstance();
 const search = ref('')
 const page = ref(1)
 const totalPages = ref(1)
@@ -74,6 +123,17 @@ const staffs = ref([])
 const loading = ref(true)
 const error = ref(null)
 const userStore = useUserStore()
+const priority = {
+  1: 'Admin',
+  2: 'Medical Staff',
+  3: 'Lab',
+  4: 'Front Desk'
+}
+
+// Modal state
+const showModal = ref(false)
+const selectedStaff = ref(null)
+const selectedPriority = ref(null)
 
 async function fetchStaffs() {
   loading.value = true
@@ -99,6 +159,61 @@ async function fetchStaffs() {
 function changePage(newPage) {
   page.value = newPage
   fetchStaffs()
+}
+
+// Open modal
+function openPriorityModal(staff) {
+  selectedStaff.value = staff
+  selectedPriority.value = staff.priority
+  showModal.value = true
+}
+
+// Close modal
+function closeModal() {
+  showModal.value = false
+  selectedStaff.value = null
+  selectedPriority.value = null
+}
+
+// Save new priority
+async function updatePriority() {
+  try {
+    await api.put(`medical-provider/medical-provider-user/${selectedStaff.value.id}`, {
+      user_id: selectedStaff.value.user.id,
+      medical_provider_id: userStore.selectedProviderId,
+      priority: selectedPriority.value
+    })
+    Swal.fire('Updated!', 'Priority has been updated.', 'success')
+    fetchStaffs()
+    closeModal()
+  } catch (err) {
+    console.error(err)
+    Swal.fire('Error', 'Failed to update priority.', 'error')
+  }
+}
+
+// Delete staff with confirmation
+async function confirmDelete(staff) {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: `You are about to delete ${staff.user.first_name}.`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!'
+  })
+
+  if (result.isConfirmed) {
+    try {
+      await api.delete(`medical-provider/medical-provider-user/${staff.id}`)
+      Swal.fire('Deleted!', 'Staff has been deleted.', 'success')
+      fetchStaffs()
+    } catch (err) {
+      console.error(err)
+      Swal.fire('Error', 'Failed to delete staff.', 'error')
+    }
+  }
 }
 
 onMounted(fetchStaffs)

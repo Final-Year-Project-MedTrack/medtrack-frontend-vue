@@ -1,12 +1,11 @@
 <template>
     <!-- Sidebar -->
     <nav :class="[
-            'flex flex-col justify-between bg-white border border-gray-100 rounded-[32px] transition-all duration-300 overflow-hidden',
-            isCollapsed ? 'w-20' : 'w-64',
-            'fixed md:relative z-40 top-0 left-0 h-screen'
-        ]"
-        class="h-full flex-col justify-between overflow-y-auto p-4 rounded-[32px] border-gray-100 border-[1px] font-[14px] text-[#5f6a61]"
-    >
+        'flex flex-col justify-between bg-white border border-gray-100 rounded-[32px] transition-all duration-300 overflow-hidden',
+        isCollapsed ? 'w-20' : 'w-64',
+        'fixed md:relative z-40 top-0 left-0 h-screen'
+    ]"
+        class="h-full flex-col justify-between overflow-y-auto p-4 rounded-[32px] border-gray-100 border-[1px] font-[14px] text-[#5f6a61]">
         <!-- Logo and Toggle -->
         <div class="p-4 flex justify-between items-center">
             <img src="../../assets/Page-heading-logo.png" alt="Logo" class="w-auto h-8" />
@@ -23,26 +22,28 @@
                 <span v-if="!isCollapsed" class="ml-3 font-semibold">Dashboard</span>
             </router-link>
 
-            <router-link :to="{name: 'MedicalProviderDashboardPatients'}"
+            <router-link :to="{ name: 'MedicalProviderDashboardPatients' }"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
                 <i class="fa fa-users"></i>
                 <span v-if="!isCollapsed" class="ml-3">Patients</span>
             </router-link>
-            <router-link v-if="userStore.medicalProviderUserPriority == 1" :to="{name: 'MedicalProviderDashboardStaffAllStaff'}"
+            <router-link v-if="userStore.medicalProviderUserPriority == 1"
+                :to="{ name: 'MedicalProviderDashboardStaffAllStaff' }"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-green-50 transition">
-                <i class="fa fa-home"></i>
+                <i class="fa fa-user"></i>
                 <span v-if="!isCollapsed" class="ml-3 font-semibold">Staff</span>
             </router-link>
 
             <!-- Visits with just Lab results -->
-            <!-- <router-link v-if="userStore.medicalProviderUserPriority == 3" :to="{name: 'MedicalProviderDashboardVisitsWithLabResults'}" -->
-            <router-link  :to="{name: 'MedicalProviderDashboardVisitsWithLabResults'}"
+            <!-- <router-link  :to="{name: 'MedicalProviderDashboardVisitsWithLabResults'}" -->
+            <!-- <router-link v-if="userStore.medicalProviderUserPriority == 3"
+                :to="{ name: 'MedicalProviderDashboardVisitsWithLabResults' }"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                <i class="fa fa-calendar-check-o"></i>
+                <i class="fa fa-user-check-o"></i>
                 <span v-if="!isCollapsed" class="ml-3">Visits with Lab Result</span>
-            </router-link>
+            </router-link> -->
 
-            <router-link :to="{name: 'MedicalProviderDashboardVisits'}"
+            <router-link :to="{ name: 'MedicalProviderDashboardVisits' }"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
                 <i class="fa fa-calendar-check-o"></i>
                 <span v-if="!isCollapsed" class="ml-3">Visits</span>
@@ -69,19 +70,21 @@
 
             <!-- User Info -->
             <!-- <router-link to="/doctor/profile" -->
-             <div
-                class="flex items-center gap-3 p-2 border-t border-gray-200 pt-4 hover:bg-gray-100 transition">
-                <img class="w-10 h-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1508002366005-75a695ee2d17?fm=jpg" alt="Rounded avatar" />
+            <div class="flex items-center gap-3 p-2 border-t border-gray-200 pt-4 hover:bg-gray-100 transition">
+                <!-- <img class="w-10 h-10 rounded-full"
+                    src="https://images.unsplash.com/photo-1508002366005-75a695ee2d17?fm=jpg" alt="Rounded avatar" /> -->
+                <img :src="'https://ui-avatars.com/api/?name=' + userStore.user.first_name + '&background=000000&color=ffffff'"
+                    class="w-8 h-8 rounded-full border-2 border-white ring-2 ring-green-500" alt="User Avatar" />
                 <div v-if="!isCollapsed" class="flex-1">
-                    <h2 v-if="userStore.user" class="text-sm font-medium">{{ userStore.user.first_name +' '+ userStore.user.last_name }}</h2>
+                    <h2 v-if="userStore.user" class="text-sm font-medium">{{ userStore.user.first_name + ' ' +
+                        userStore.user.last_name }}</h2>
                     <h2 v-else class="text-sm font-medium">Alison Eyo</h2>
 
                     <p v-if="userStore.user" class="text-xs text-gray-500">{{ userStore.user.email }}</p>
                     <p v-else class="text-xs text-gray-500">alison.e@rayna.ui</p>
                 </div>
                 <i v-if="!isCollapsed" v-on:click="logout" class="fa fa-sign-out text-gray-400 ml-auto"></i>
-            <!-- </router-link> -->
+                <!-- </router-link> -->
             </div>
         </div>
     </nav>
@@ -99,7 +102,6 @@ const userStore = useUserStore()
 const router = useRouter()
 const isCollapsed = ref(false)
 
-console.log(userStore.user)
 const toggleSidebar = () => {
     isCollapsed.value = !isCollapsed.value
 }
@@ -110,9 +112,9 @@ onMounted(() => {
     }
 })
 
-async function logout(){
+async function logout() {
     try {
-        await api.post('auth/logout'); 
+        await api.post('auth/logout');
 
         userStore.reset()
         router.push({ name: 'Login' });

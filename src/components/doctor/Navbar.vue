@@ -28,7 +28,7 @@
         <Menu as="div" class="relative">
           <MenuButton class="focus:outline-none">
             <img
-              src="https://ui-avatars.com/api/?name=Daniel&background=000000&color=ffffff"
+              :src="'https://ui-avatars.com/api/?name=' + userStore.user.first_name + '&background=000000&color=ffffff'"
               class="w-8 h-8 rounded-full border-2 border-white ring-2 ring-green-500"
               alt="User Avatar"
             />

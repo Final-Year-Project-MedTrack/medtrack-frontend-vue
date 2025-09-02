@@ -17,7 +17,7 @@ import { CalendarPlus, Users, Activity, FileText } from 'lucide-vue-next'
 
 const props = defineProps({
   title: String,
-  count: String,
+  count: Number,
   completed: String,
   trend: String,
   icon: String,
