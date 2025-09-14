@@ -198,7 +198,9 @@ const handleMedicalProviderUserResponse = (data) => {
   userStore.setMedicalProviderUserPriority(data.data.user.priority)
 
   console.log(data.data.user.priority)
-  return router.push({ name: 'MedicalProviderDashboard' })
+  // return
+  // return router.push({ name: 'MedicalProviderDashboard' })
+  return handleRedirectFromPriority(data.data.user.priority)
 
 
 }
@@ -211,6 +213,21 @@ const handleDoctorLoginResponse = (data) => {
   userStore.setToken(data.data.token)
   userStore.setDoctorProfile(data.data.user.user)
   return router.push({ name: 'DoctorSelectProvider' })
+}
+
+const handleRedirectFromPriority = (priority) => {
+  const priorityNum = Number(priority)
+
+  const routes = {
+    3: 'RadiologistDashboard',       // Lab Attendant
+    4: 'RadiologistDashboard',       // Radiologist
+    5: 'MedicalProviderDashboard',   // Non Medical Personnel
+    6: 'AccountantDashboard',        // Accountant
+  }
+
+  const routeName = routes[priorityNum] || 'MedicalProviderDashboard'
+
+  return router.push({ name: routeName })
 }
 
 

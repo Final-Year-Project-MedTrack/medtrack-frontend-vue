@@ -129,7 +129,16 @@ const props = defineProps({
   admissionStatus: String,
   admissionDate: String,
   patientVitalsUpdatedTime: String,
-  visit: Object
+//   visit: Object,
+//   patient: Object
+visit: {
+    type: Object,
+    default: () => ({})
+  },
+  patient: {
+    type: Object,
+    default: () => ({})
+  }
 })
 
 const icons = {

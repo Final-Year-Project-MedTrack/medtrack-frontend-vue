@@ -27,7 +27,7 @@
         <tr v-for="staff in staffs" :key="staff.id" class="border-b border-gray-100">
           <td class="p-2 flex items-center gap-2">
             <!-- <img :src="staff.avatar ?? '/default-avatar.png'" class="w-8 h-8 rounded-full" /> -->
-            {{ staff.user.first_name }}
+            {{ staff.user.first_name+' '+staff.user.last_name }}
           </td>
           <td class="p-2">#{{ staff.id }}</td>
           <td class="p-2">{{ staff.user.email }}</td>
@@ -125,9 +125,11 @@ const error = ref(null)
 const userStore = useUserStore()
 const priority = {
   1: 'Admin',
-  2: 'Medical Staff',
-  3: 'Lab',
-  4: 'Front Desk'
+  2: 'Nurse',
+  3: 'Lab Attendant',
+  4: 'Radiologist',
+  5: 'Non Medical Personnel',
+  6: 'Accountant'
 }
 
 // Modal state

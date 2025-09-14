@@ -84,10 +84,17 @@ function menuItemClass(active) {
 
 function returnUserPriorityName() {
   const roles = {
+    // 1: 'Admin',
+    // 2: 'Medical Staff',
+    // 3: 'Lab',
+    // 4: 'Front Desk'
+
     1: 'Admin',
-    2: 'Medical Staff',
-    3: 'Lab',
-    4: 'Front Desk'
+    2: 'Nurse',
+    3: 'Lab Attendant',
+    4: 'Radiologist',
+    5: 'Non Medical Personnel',
+    6: 'Accountant'
   }
   return roles[userStore.medicalProviderUserPriority] || 'Unknown'
 }

@@ -21,7 +21,7 @@
         @mousedown.prevent="selectUser(user)" 
         class="p-2 hover:bg-gray-100 cursor-pointer"
       >
-        {{ user.national_id }} — {{ user.first_name }} {{ user.last_name }}
+        {{ user.first_name }} {{ user.last_name }}
       </li>
     </ul>
 
@@ -30,15 +30,15 @@
       <div>
         <strong>Selected:</strong>
         {{ selectedUser.first_name }} {{ selectedUser.last_name }}
-        ({{ selectedUser.national_id }})
       </div>
 
       <select v-model="priority" class="border border-gray-100 p-2 rounded w-full" @click.stop>
         <option value="" disabled>Select priority</option>
-        <option value="1">Provider Admin</option>
-        <option value="2">Nurse</option>
-        <option value="3">Lab Attendant</option>
-        <option value="4">Non Medical Personnel</option>
+        <option v-for="(label, value) in staffPriorities" 
+            :key="value" 
+            :value="value">
+            {{ label }}
+        </option>
       </select>
     </div>
 
@@ -67,6 +67,14 @@ const selectedUser = ref(null)
 const priority = ref(null)
 const showDropdown = ref(false)
 const router = useRouter()
+const staffPriorities = {
+  1: 'Admin',
+  2: 'Nurse',
+  3: 'Lab Attendant',
+  4: 'Radiologist',
+  5: 'Non Medical Personnel',
+  6: 'Accountant'
+}
 
 let timeout = null
 
@@ -81,8 +89,8 @@ watch(search, (newSearch) => {
 
   timeout = setTimeout(async () => {
     try {
-      const { data } = await api.get('/users/search', {
-        params: { q: newSearch }
+      const { data } = await api.get('/users/search-not-in-provider', {
+        params: { search: newSearch }
       })
       userResults.value = Array.isArray(data) ? data : data.data
       showDropdown.value = true

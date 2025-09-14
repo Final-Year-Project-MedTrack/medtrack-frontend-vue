@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import doctorRoutes from './doctor'
 import adminRoutes from './admin'
 import medicalProviderRoutes from './medicalProviderAdmin'
+
+import radiologistRoutes from './radiologist'
+import accountantRoutes from './accountant'
 import Login from '@/views/auth/Login.vue'
 import ValidateOTP from '@/views/auth/ValidateOTP.vue'
 
@@ -13,6 +16,8 @@ const routes = [
   ...doctorRoutes,
   ...adminRoutes,
   ...medicalProviderRoutes,
+  ...radiologistRoutes,
+  ...accountantRoutes
 ]
 
 const router = createRouter({

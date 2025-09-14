@@ -203,5 +203,8 @@ import { CalendarPlus, Users, Activity, FileText } from 'lucide-vue-next'
 
 const props = defineProps({
   patient: Object,
+  visit: Object,
 })
+
+const patient = visit.patient
 </script>

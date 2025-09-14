@@ -94,6 +94,7 @@ const props = defineProps({
   patient: Object
 })
 
+// const patient = visit.patient
 const icons = {
   'calendar-plus': CalendarPlus,
   'users': Users,

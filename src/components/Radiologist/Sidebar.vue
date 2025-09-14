@@ -21,32 +21,18 @@
                 <i class="fa fa-home"></i>
                 <span v-if="!isCollapsed" class="ml-3 font-semibold">Dashboard</span>
             </router-link>
-
-            <router-link :to="{ name: 'MedicalProviderDashboardPatients' }"
-                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                <i class="fa fa-users"></i>
-                <span v-if="!isCollapsed" class="ml-3">Patients</span>
-            </router-link>
-            <router-link v-if="userStore.medicalProviderUserPriority == 1"
-                :to="{ name: 'MedicalProviderDashboardStaffAllStaff' }"
-                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-green-50 transition">
-                <i class="fa fa-user"></i>
-                <span v-if="!isCollapsed" class="ml-3 font-semibold">Staff</span>
-            </router-link>
-
+            
             <!-- Visits with just Lab results -->
-            <!-- <router-link  :to="{name: 'MedicalProviderDashboardVisitsWithLabResults'}" -->
-            <router-link v-if="userStore.medicalProviderUserPriority == 3"
-                :to="{ name: 'MedicalProviderDashboardVisitsWithLabResults' }"
+            <router-link :to="{ name: 'RadiologistDashboardVisitsWithLabResults' }"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
                 <i class="fa fa-user-check-o"></i>
                 <span v-if="!isCollapsed" class="ml-3">Visits with Lab Result</span>
             </router-link>
 
-            <router-link :to="{ name: 'MedicalProviderDashboardVisits' }"
-                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                <i class="fa fa-calendar-check-o"></i>
-                <span v-if="!isCollapsed" class="ml-3">Visits</span>
+            <router-link :to="{name: 'RadiologistDashboardLaboratoryTestService'}"
+                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-green-50 transition">
+                <i class="fa fa-home"></i>
+                <span v-if="!isCollapsed" class="ml-3 font-semibold">Laboratory Test Service</span>
             </router-link>
         </div>
 
