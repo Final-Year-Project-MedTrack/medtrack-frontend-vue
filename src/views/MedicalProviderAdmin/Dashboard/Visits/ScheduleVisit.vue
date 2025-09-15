@@ -115,7 +115,6 @@ const searchPatient = async () => {
   try {
     const res = await api.get(`patients/search?nin=${nin.value}`);
     patient.value = res.data.data;
-    // console.log(res.data.data.patient_profile, res.data.data)
     form.value.patient_id = res.data.data.patient_profile.id; // link to PatientProfile
   } catch (err) {
     console.log(err)
