@@ -91,6 +91,7 @@
 import { ref } from "vue";
 import api from '@/services/axios'
 import { useUserStore } from '@/store/user'
+import Swal from 'sweetalert2'
 const userStore = useUserStore()
 
 const nin = ref("");
@@ -113,9 +114,11 @@ const searchPatient = async () => {
 
   try {
     const res = await api.get(`patients/search?nin=${nin.value}`);
-    patient.value = res.data;
-    form.value.patient_id = res.data.patient_profile.id; // link to PatientProfile
+    patient.value = res.data.data;
+    // console.log(res.data.data.patient_profile, res.data.data)
+    form.value.patient_id = res.data.data.patient_profile.id; // link to PatientProfile
   } catch (err) {
+    console.log(err)
     error.value = "Patient not found.";
   }
 };
@@ -123,7 +126,8 @@ const searchPatient = async () => {
 const createVisit = async () => {
   try {
     await api.post("medical-provider/patient-visit/patient-visit", form.value);
-    alert("Visit created successfully!");
+    // alert("Visit created successfully!");
+    Swal.fire('Scheduled!', 'Visit created successfully!', 'success')
     // reset form
     nin.value = "";
     patient.value = null;
@@ -137,7 +141,8 @@ const createVisit = async () => {
       reason: "",
     };
   } catch (err) {
-    alert("Failed to create visit.");
+    // alert("Failed to create visit.");
+    Swal.fire('Something went Wrong!', err.response.data.message, 'error')
   }
 };
 </script>
