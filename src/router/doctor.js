@@ -105,6 +105,22 @@ export default [
             component: () =>
               import("@/components/doctor/visitsPage/ViewMedicalLaboratoryTest.vue"),
           },
+
+
+          {
+            path: "prescriptions",
+            name: "DoctorDashboardViewVisitPrescriptions",
+            component: () =>
+              import(
+                "@/components/doctor/visitsPage/Prescriptions.vue"
+              ),
+          },
+          // {
+          //   path: "view-lab-test/:visitLabTestId",
+          //   name: "DoctorDashboardViewVisitWithLabResultsViewLabTest",
+          //   component: () =>
+          //     import("@/components/doctor/visitsPage/ViewMedicalLaboratoryTest.vue"),
+          // },
         ]
       },
       {
@@ -130,6 +146,13 @@ export default [
         path: 'add-patient-visit-lab-test/:patientId/:visitId',
         name: 'DoctorDashboardAddPatientVisitLaboratoryTest',
         component: () => import('@/views/Doctor/Dashboard/AddPatientVisitLaboratoryTest.vue'),
+      },
+
+
+      {
+        path: 'add-patient-visit-prescription/:patientId/:visitId',
+        name: 'DoctorDashboardAddPatientVisitPrescription',
+        component: () => import('@/views/Doctor/Dashboard/AddPrescription.vue'),
       },
       // other doctor routes...
     ]

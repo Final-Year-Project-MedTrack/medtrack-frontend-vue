@@ -6,7 +6,7 @@
       <div class="flex items-center gap-4">
         <HomeIcon class="w-5 h-5 text-gray-500" />
         <span class="text-lg font-semibold">Doctor Dashboard</span>
-        <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full uppercase">New</span>
+        <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full uppercase">Doctor</span>
       </div>
 
       <!-- Center: Search -->

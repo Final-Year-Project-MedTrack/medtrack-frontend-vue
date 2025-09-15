@@ -79,6 +79,7 @@ import VitalsHistory from '@/components/doctor/visitsPage/VitalsHistory.vue'
 import Diagnosis from '@/components/doctor/visitsPage/Diagnosis.vue'
 import MedicalRecords from '@/components/doctor/visitsPage/MedicalRecords.vue'
 import Allergies from '@/components/doctor/visitsPage/Allergies.vue'
+import Prescriptions from '@/components/doctor/visitsPage/Prescriptions.vue'
 import ViewVisitHistory from '@/components/doctor/visitsPage/ViewVisitHistory.vue'
 import ViewMedicalLaboratoryTest from '@/components/doctor/visitsPage/ViewMedicalLaboratoryTests.vue'
 
@@ -107,6 +108,8 @@ const tabs = [
   { name: 'DoctorDashboardViewVisitPatientMedicalConditions', label: 'Diagnosis', component: Diagnosis },
   { name: 'DoctorDashboardViewVisitPatientMedicalRecord', label: 'Medical Record', component: MedicalRecords },
   { name: 'DoctorDashboardViewVisitPatientAllergies', label: 'Allergies', component: Allergies },
+  { name: 'DoctorDashboardViewVisitPrescriptions', label: 'Prescriptions', component: Prescriptions },
+  // DoctorDashboardViewVisitPrescriptions
   // { name: 'ViewVisitHistory', label: 'View Visit History', component: ViewVisitHistory },
   { name: 'DoctorDashboardViewVisitWithLabResultsLabTests', label: 'Laboratory Test', component: ViewMedicalLaboratoryTest },
   // { name: 'RadiologistDashboardViewVisitWithLabResultsLabTest', label: 'Lab Test' },

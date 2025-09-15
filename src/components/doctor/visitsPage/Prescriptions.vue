@@ -1,9 +1,9 @@
 <template>
     <div class="p-6 bg-white ">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold text-gray-800">Laboratory Test Request</h2>
-            <router-link :to="{name: 'DoctorDashboardAddPatientVisitLaboratoryTest', params:{'patientId':visit.patient.id, 'visitId':visit.id}}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
-                + Add Laboratory Test Request
+            <h2 class="text-xl font-semibold text-gray-800">Prescriptions</h2>
+            <router-link :to="{name: 'DoctorDashboardAddPatientVisitPrescription', params:{'patientId':visit.patient.id, 'visitId':visit.id}}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+                + Add Prescription
             </router-link>
         </div>
 
@@ -59,10 +59,10 @@
         <div v-else v-for="(medicalRecord, index) in medicalRecords" :key="index" class="mb-4 border border-gray-100 rounded-lg">
             <div class="p-4 flex justify-between items-center cursor-pointer" @click="toggle(index)">
                 <div>
-                    <h2>{{ medicalRecord.laboratoryTest.name }}</h2>
-                    <h6>{{ medicalRecord.laboratoryTest.type }}</h6>
+                    <h2>{{ medicalRecord.drug.name }}</h2>
+                    <h6>{{ medicalRecord.drug.type }}</h6>
                     <p class="text-sm text-gray-500">{{ timeAgo(medicalRecord.created_at) }}</p>
-                    <p class="text-sm text-gray-600">Recorded by: {{ medicalRecord.created_by_user.first_name +' '+medicalRecord.created_by_user.last_name }}</p>
+                    <!-- <p class="text-sm text-gray-600">Recorded by: {{ medicalRecord.created_by_user.first_name +' '+medicalRecord.created_by_user.last_name }}</p> -->
                 </div>
                 <svg :class="{ 'rotate-180': openIndex === index }" class="w-5 h-5 transition-transform" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -72,20 +72,12 @@
 
             <div v-if="openIndex === index" class="p-4">
                 <div class="col-span-1 py-2">
-                    <p class="text-sm text-gray-500">Created By: <span class="font-semibold text-gray-800">{{ medicalRecord.created_by_user.first_name +' '+medicalRecord.created_by_user.last_name }}</span></p>
+                    <!-- <p class="text-sm text-gray-500">Created By: <span class="font-semibold text-gray-800">{{ medicalRecord.created_by_user.first_name +' '+medicalRecord.created_by_user.last_name }}</span></p> -->
+                     <p class="text-sm text-gray-500">Period: <span class="font-semibold text-gray-800">{{ medicalRecord.period }}</span></p>
+                     <p class="text-sm text-gray-500">Quantity: <span class="font-semibold text-gray-800">{{ medicalRecord.quantity }}</span></p>
+                     <p class="text-sm text-gray-500">Description: <span class="font-semibold text-gray-800">{{ medicalRecord.period }}</span></p>
                 </div>
 
-                <div>
-                    <router-link :to="{
-                        name: 'DoctorDashboardViewVisitWithLabResultsViewLabTest',
-                        params: {
-                            'visitId': visit.id,
-                            'visitLabTestId': medicalRecord.id
-                        }
-                    }" class="px-4 py-2 bg-green-600 text-white rounded-md">
-                        View Lab Test
-                    </router-link>
-                </div>
             </div>
         </div>
     </div>
@@ -128,7 +120,7 @@ const toggle = (index) => {
 
 onMounted(async () => {
     try {
-        const response = await api.get(`medical-provider/patient-visit/patient-visit-laboratory-test`, {
+        const response = await api.get(`medical-provider/patient-visit/patient-visit-prescriptions`, {
              params: {
                 visit_id: props.visit.id
             }
@@ -143,7 +135,8 @@ onMounted(async () => {
     }
 })
 
-function timeAgo(dateString) {
+
+ function timeAgo(dateString) {
       const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
 
       let interval = seconds / 31536000; // years
