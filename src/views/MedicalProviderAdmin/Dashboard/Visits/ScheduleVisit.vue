@@ -125,7 +125,6 @@ const searchPatient = async () => {
 const createVisit = async () => {
   try {
     await api.post("medical-provider/patient-visit/patient-visit", form.value);
-    // alert("Visit created successfully!");
     Swal.fire('Scheduled!', 'Visit created successfully!', 'success')
     // reset form
     nin.value = "";

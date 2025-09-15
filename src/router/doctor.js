@@ -41,7 +41,7 @@ export default [
         children: [
           {
             path: "overview",
-            name: "DoctorDashboardViewVisitWithLabResultsOverview",
+            name: "DoctorDashboardViewVisitOverview",
             component: () =>
               import(
                 "@/components/medicalProviderAdmin/visitsPage/VisitOverview.vue"

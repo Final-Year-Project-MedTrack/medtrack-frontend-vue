@@ -101,7 +101,7 @@ let visit = {
 
 
 const tabs = [
-  { name: 'DoctorDashboardViewVisitWithLabResultsOverview', label: 'Overview', component: VisitOverview, props: '' },
+  { name: 'DoctorDashboardViewVisitOverview', label: 'Overview', component: VisitOverview, props: '' },
   { name: 'DoctorDashboardViewVisitPatientProfile', label: 'Profile', component: PatientProfile },
   { name: 'DoctorDashboardViewVisitPatientVitalsHistory', label: 'Vitals History', component: VitalsHistory },
   { name: 'DoctorDashboardViewVisitPatientMedicalConditions', label: 'Diagnosis', component: Diagnosis },

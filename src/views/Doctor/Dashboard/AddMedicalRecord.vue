@@ -119,7 +119,7 @@ const visitId = route.params.visitId
 
 const recordTypes = [
   { value: 'diagnosis', label: 'Diagnosis' },
-  { value: 'lab result', label: 'Lab Result' },
+  // { value: 'lab result', label: 'Lab Result' },
   { value: 'prescription', label: 'Prescription' },
   { value: 'visit note', label: 'Visit Note' },
 ]

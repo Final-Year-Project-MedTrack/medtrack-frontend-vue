@@ -70,7 +70,7 @@
             <p class="text-sm text-gray-600">{{ visit.reason }}</p>
           </div>
           <div class="">
-            <router-link :to="{'name': 'DoctorDashboardViewVisits', 'params': {'visitId': visit.id}}" class=" border border-gray-600 rounded p-2 my-4 right-0 text-sm text-gray-600 hover:underline">
+            <router-link :to="{'name': 'DoctorDashboardViewVisitOverview', 'params': {'visitId': visit.id}}" class=" border border-gray-600 rounded p-2 my-4 right-0 text-sm text-gray-600 hover:underline">
               View medical record →
             </router-link>
           </div>
