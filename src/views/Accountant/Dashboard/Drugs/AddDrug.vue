@@ -1,32 +1,32 @@
 <template>
   <div class="p-6 max-w-lg mx-auto">
-    <!-- Search Laboratory Test -->
+    <!-- Search Drug -->
     <div>
-      <label class="block font-semibold mb-1">Search Laboratory Test</label>
+      <label class="block font-semibold mb-1">Search Drugs</label>
       <input
         v-model="searchQuery"
-        @input="searchTests"
+        @input="searchDrugs"
         type="text"
-        placeholder="Type test name..."
+        placeholder="Type Drug name or brand..."
         class="border rounded w-full px-3 py-2"
       />
 
       <ul v-if="searchResults.length" class="border rounded mt-2 divide-y">
         <li
-          v-for="test in searchResults"
-          :key="test.id"
-          @click="selectTest(test)"
+          v-for="drug in searchResults"
+          :key="drug.id"
+          @click="selectDrug(drug)"
           class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
         >
-          {{ test.name }}
+          {{ drug.name }}
         </li>
       </ul>
     </div>
 
-    <!-- Selected Laboratory Test -->
-    <div v-if="selectedTest" class="mt-6">
+    <!-- Selected Drug -->
+    <div v-if="selectedDrug" class="mt-6">
       <h3 class="text-lg font-semibold mb-2">
-        Selected: {{ selectedTest.name }}
+        Selected: {{ selectedDrug.name }}
       </h3>
 
       <div class="mb-4">
@@ -35,6 +35,15 @@
           v-model="form.price"
           type="number"
           placeholder="Enter price"
+          class="border rounded w-full px-3 py-2"
+        />
+      </div>
+
+      <div class="mb-4">
+      <input
+          v-model="form.quantity"
+          type="number"
+          placeholder="Enter Quantity"
           class="border rounded w-full px-3 py-2"
         />
       </div>
@@ -72,25 +81,26 @@ const userStore = useUserStore()
 
 const searchQuery = ref('')
 const searchResults = ref([])
-const selectedTest = ref(null)
+const selectedDrug = ref(null)
 
 const form = ref({
-  laboratory_test_id: null,
+  drug_id: null,
   medical_provider_id: userStore.selectedProviderId, // <-- replace with the real provider ID (maybe from auth)
   price: '',
+  quantity: '',
   availabilty_status: false
 })
 
 const loading = ref(false)
 
-const searchTests = async () => {
+const searchDrugs = async () => {
   if (!searchQuery.value.trim()) {
     searchResults.value = []
     return
   }
 
   try {
-    const { data } = await axios.get('/laboratory-test', {
+    const { data } = await axios.get('/drug', {
       params: { search: searchQuery.value }
     })
     searchResults.value = data.data.items
@@ -99,33 +109,30 @@ const searchTests = async () => {
   }
 }
 
-const selectTest = (test) => {
-  selectedTest.value = test
-  form.value.laboratory_test_id = test.id
+const selectDrug = (drug) => {
+  selectedDrug.value = drug
+  form.value.drug_id = drug.id
   searchResults.value = []
-  searchQuery.value = test.name
+  searchQuery.value = drug.name
 }
 
 const save = async () => {
   loading.value = true
   try {
     await axios.post(
-      '/medical-provider/medical-provider-laboratory-test',
+      '/medical-provider/medical-provider-laboratory-drugs',
       {
         ...form.value,
         availabilty_status: form.value.availabilty_status ? 1 : 0
       }
     )
-    // alert('Laboratory test added successfully!')
-    Swal.fire('Added!', 'Laboratory Test has been added successfully.', 'success')
+    Swal.fire('Added!', 'Drug has been added successfully.', 'success')
     // reset
-    selectedTest.value = null
+    selectedDrug.value = null
     form.value.price = ''
     form.value.availabilty_status = false
     searchQuery.value = ''
   } catch (err) {
-    // console.error(err)
-    // alert('Error saving laboratory test')
     Swal.fire('Error!', err.response.data.message, 'error')
   } finally {
     loading.value = false

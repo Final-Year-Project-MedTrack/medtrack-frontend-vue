@@ -22,42 +22,23 @@
                 <span v-if="!isCollapsed" class="ml-3 font-semibold">Dashboard</span>
             </router-link>
 
-            <router-link :to="{ name: 'MedicalProviderDashboardPatients' }"
-                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                <i class="fa fa-users"></i>
-                <span v-if="!isCollapsed" class="ml-3">Patients</span>
-            </router-link>
-            <router-link v-if="userStore.medicalProviderUserPriority == 1"
-                :to="{ name: 'MedicalProviderDashboardStaffAllStaff' }"
+            <router-link :to="{name: 'AccountantDashboardDrugs'}"
                 class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-green-50 transition">
-                <i class="fa fa-user"></i>
-                <span v-if="!isCollapsed" class="ml-3 font-semibold">Staff</span>
+                <!-- <i class="fa fa-pill"></i> -->
+                 <i class="fa-solid fa-pills"></i>
+                <span v-if="!isCollapsed" class="ml-3 font-semibold">Drugs</span>
             </router-link>
 
-            <!-- Visits with just Lab results -->
-            <!-- <router-link  :to="{name: 'MedicalProviderDashboardVisitsWithLabResults'}" -->
-            <router-link v-if="userStore.medicalProviderUserPriority == 3"
-                :to="{ name: 'MedicalProviderDashboardVisitsWithLabResults' }"
-                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                <i class="fa fa-user-check-o"></i>
-                <span v-if="!isCollapsed" class="ml-3">Visits with Lab Result</span>
-            </router-link>
-
-            <router-link :to="{ name: 'MedicalProviderDashboardVisits' }"
-                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                <i class="fa fa-calendar-check-o"></i>
-                <span v-if="!isCollapsed" class="ml-3">Visits</span>
+            <router-link :to="{name: 'AccountantDashboardLaboratoryTestService'}"
+                class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-green-50 transition">
+                <i class="fa fa-flask-portion"></i>
+                <span v-if="!isCollapsed" class="ml-3 font-semibold">Laboratory Test Service</span>
             </router-link>
         </div>
 
         <!-- Footer Actions -->
         <div class="p-4 space-y-4">
             <div class="space-y-2">
-                <router-link to="/doctor/settings"
-                    class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition">
-                    <i class="fa fa-cog"></i>
-                    <span v-if="!isCollapsed" class="ml-3">Settings</span>
-                </router-link>
 
                 <router-link to="/doctor/help"
                     class="flex items-center p-2 rounded-lg text-[#5f6a61] hover:bg-gray-100 transition relative">
