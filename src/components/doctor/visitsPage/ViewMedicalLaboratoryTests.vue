@@ -1,7 +1,7 @@
 <template>
     <div class="p-6 bg-white ">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold text-gray-800">Medical Records</h2>
+            <h2 class="text-xl font-semibold text-gray-800">Laboratory Test Request</h2>
             <router-link :to="{name: 'DoctorDashboardAddPatientVisitLaboratoryTest', params:{'patientId':visit.patient.id, 'visitId':visit.id}}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
                 + Add Laboratory Test Request
             </router-link>
@@ -51,7 +51,7 @@
         <div v-else-if="medicalRecords.length == 0">
             <div class="mb-4 border border-gray-100 rounded-lg">
                 <div class=" p-8">
-                    No Medical Condition Recorded
+                    No Laboratory Test Request Recorded
                 </div>    
             </div>
         </div>
