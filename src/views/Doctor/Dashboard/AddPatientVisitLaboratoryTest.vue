@@ -26,21 +26,11 @@
       <h3 class="text-lg font-semibold">Selected: {{ selectedTest.name }}</h3>
 
       <div>
-        <label class="block mb-1">Patient ID</label>
-        <input v-model="form.patient_id" class="border rounded w-full px-3 py-2" />
-      </div>
-
-      <div>
-        <label class="block mb-1">Patient Visit ID</label>
-        <input v-model="form.patient_visit_id" class="border rounded w-full px-3 py-2" />
-      </div>
-
-      <div>
         <label class="block mb-1">Status</label>
         <select v-model="form.status" class="border rounded w-full px-3 py-2">
           <option value="pending">Pending</option>
-          <option value="in_progress">In Progress</option>
-          <option value="completed">Completed</option>
+          <option value="assigned">Assigned</option>
+          <option value="filled">Filled</option>
         </select>
       </div>
 
@@ -62,19 +52,25 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
+import { useRouter, useRoute } from 'vue-router'
+import api from '@/services/axios'
 
 const searchQuery = ref('')
 const searchResults = ref([])
 const selectedTest = ref(null)
 
+const route = useRoute()
+const visitId = route.params.visitId
+// const visitLabTestId = route.params.visitLabTestId
+
 const form = ref({
-  patient_id: '',
-  patient_visit_id: '',
+  patient_id: route.params.patientId,
+  patient_visit_id: visitId,
   laboratory_test_id: null,
   status: '',
   comment: '',
-  created_by_user_id: 123 // get from auth/session
+  created_by_user_id: 1 // get from auth/session
 })
 
 const loading = ref(false)
@@ -85,10 +81,10 @@ const searchTests = async () => {
     return
   }
   try {
-    const { data } = await axios.get('/laboratory-test', {
+    const { data } = await api.get('/laboratory-test', {
       params: { query: searchQuery.value }
     })
-    searchResults.value = data
+    searchResults.value = data.data.items
   } catch (err) {
     console.error(err)
   }
@@ -103,7 +99,7 @@ const selectTest = (test) => {
 const save = async () => {
   try {
     loading.value = true
-    await axios.post('/patient-visit-laboratory-test', form.value)
+    await api.post('medical-provider/patient-visit/patient-visit-laboratory-test', form.value)
     alert('Patient visit laboratory test added!')
   } catch (err) {
     console.error(err)

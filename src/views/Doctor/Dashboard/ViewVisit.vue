@@ -29,12 +29,25 @@
 
     <!-- Main Section -->
     <div class="flex space-x-4 border-b border-gray-200 mb-4">
-      <button v-for="tab in tabs" :key="tab.name" @click="activeTab = tab.name" :class="[
+      <!-- <button v-for="tab in tabs" :key="tab.name" @click="activeTab = tab.name" :class="[
         'py-2 px-4 font-medium',
         activeTab === tab.name ? 'border-b-1 text-green-600' : 'text-gray-600'
       ]">
         {{ tab.label }}
-      </button>
+      </button> -->
+      <button
+          v-for="tab in tabs"
+          :key="tab.name"
+          @click="goToTab(tab)"
+          :class="[
+            'py-2 px-4 font-medium',
+            $route.name === tab.name
+              ? 'border-b-2 border-green-600 text-green-600'
+              : 'text-gray-600'
+          ]"
+        >
+          {{ tab.label }}
+        </button>
     </div>
 
     <div v-if="loading" class="text-gray-500">
@@ -50,13 +63,14 @@
       </div>
     </div>
     <div v-else-if="error" class="text-red-600">Error: {{ error }}</div>
-    <component v-else :is="currentComponent" :visit=visit :patient="visit.patient" />
+    <!-- <component v-else :is="currentComponent" :visit=visit :patient="visit.patient" /> -->
+     <router-view v-else :visit="visit" :patient="visit.patient" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import api from '@/services/axios'
 import ViewVisitDashboardHeader from '@/components/doctor/visitsPage/ViewVisitDashboardHeader.vue'
 import PatientProfile from '@/components/doctor/visitsPage/PatientProfile.vue'
@@ -66,7 +80,10 @@ import Diagnosis from '@/components/doctor/visitsPage/Diagnosis.vue'
 import MedicalRecords from '@/components/doctor/visitsPage/MedicalRecords.vue'
 import Allergies from '@/components/doctor/visitsPage/Allergies.vue'
 import ViewVisitHistory from '@/components/doctor/visitsPage/ViewVisitHistory.vue'
+import ViewMedicalLaboratoryTest from '@/components/doctor/visitsPage/ViewMedicalLaboratoryTests.vue'
 
+
+const router = useRouter()
 const route = useRoute()
 const visitId = route.params.visitId
 const loading = ref(true)
@@ -82,15 +99,22 @@ let visit = {
 }
 
 
+
 const tabs = [
-  { name: 'visit-overview', label: 'Overview', component: VisitOverview, props: '' },
-  { name: 'patient-profile', label: 'Profile', component: PatientProfile },
-  { name: 'vitals-history', label: 'Vitals History', component: VitalsHistory },
-  { name: 'diagnosis', label: 'Diagnosis', component: Diagnosis },
-  { name: 'medical-record', label: 'Medical Record', component: MedicalRecords },
-  { name: 'allergies', label: 'Allergies', component: Allergies },
-  { name: 'ViewVisitHistory', label: 'View Visit History', component: ViewVisitHistory },
+  { name: 'DoctorDashboardViewVisitWithLabResultsOverview', label: 'Overview', component: VisitOverview, props: '' },
+  { name: 'DoctorDashboardViewVisitPatientProfile', label: 'Profile', component: PatientProfile },
+  { name: 'DoctorDashboardViewVisitPatientVitalsHistory', label: 'Vitals History', component: VitalsHistory },
+  { name: 'DoctorDashboardViewVisitPatientMedicalConditions', label: 'Diagnosis', component: Diagnosis },
+  { name: 'DoctorDashboardViewVisitPatientMedicalRecord', label: 'Medical Record', component: MedicalRecords },
+  { name: 'DoctorDashboardViewVisitPatientAllergies', label: 'Allergies', component: Allergies },
+  // { name: 'ViewVisitHistory', label: 'View Visit History', component: ViewVisitHistory },
+  { name: 'DoctorDashboardViewVisitWithLabResultsLabTests', label: 'Laboratory Test', component: ViewMedicalLaboratoryTest },
+  // { name: 'RadiologistDashboardViewVisitWithLabResultsLabTest', label: 'Lab Test' },
 ]
+
+function goToTab(tab) {
+  router.push({ name: tab.name })
+}
 
 const activeTab = ref('visit-overview')
 

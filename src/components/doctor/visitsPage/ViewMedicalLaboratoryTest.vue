@@ -46,21 +46,6 @@
       </table>
     </div>
 
-    <!-- Add Data Form -->
-    <div class="border border-gray-100 rounded p-4 mb-6">
-      <h3 class="font-semibold mb-2">Add Test Data</h3>
-      <div class="grid grid-cols-2 gap-4">
-        <input v-model="newData.record_data_key" placeholder="Key" class="border border-gray-100 rounded px-3 py-2" />
-        <input v-model="newData.record_data_value" placeholder="Value"
-          class="border border-gray-100 rounded px-3 py-2" />
-      </div>
-      <textarea v-model="newData.comment" placeholder="Comment"
-        class="border border-gray-100 rounded px-3 py-2 w-full mt-2"></textarea>
-      <button @click="addData" :disabled="loadingData"
-        class="bg-green-600 text-white px-4 py-2 rounded mt-3 hover:bg-green-700">
-        {{ loadingData ? 'Saving...' : 'Add Data' }}
-      </button>
-    </div>
 
     <!-- Files Section -->
     <div>
@@ -81,24 +66,6 @@
       <button @click="showFileModal = true" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Upload File
       </button>
-    </div>
-
-    <!-- File Upload Modal -->
-    <div v-if="showFileModal" class="fixed inset-0 bg-black/50 flex items-center justify-center">
-      <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h3 class="text-lg font-semibold mb-2">Upload Files</h3>
-
-        <input type="file" multiple @change="handleFileChange" class="border rounded px-3 py-2 w-full" />
-
-        <div class="mt-4 flex justify-end space-x-2">
-          <button @click="showFileModal = false" class="px-3 py-1 rounded border">
-            Cancel
-          </button>
-          <button @click="uploadFiles" :disabled="loadingFile" class="bg-green-600 text-white px-4 py-2 rounded">
-            {{ loadingFile ? 'Uploading...' : 'Upload' }}
-          </button>
-        </div>
-      </div>
     </div>
 
   </div>
