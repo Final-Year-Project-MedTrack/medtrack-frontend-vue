@@ -164,7 +164,7 @@ const loadData = async () => {
 
 const loadFiles = async () => {
   const { data } = await axios.get(`/medical-provider/patient-visit/patient-visit-lab-test-files`, {
-    params: { patient_visit_laboratory_test_id: visitLabTestId }
+    params: { patientVisitLaboratoryTestId: visitLabTestId }
   })
   testFiles.value = data.data.items
 }

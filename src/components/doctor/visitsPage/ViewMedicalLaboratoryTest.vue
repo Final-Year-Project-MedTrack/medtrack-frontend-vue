@@ -22,7 +22,6 @@
             <th class="p-2 border border-gray-100">Value</th>
             <th class="p-2 border border-gray-100">Comment</th>
             <!-- <th class="p-2 border border-gray-100">Diagnosed By</th> -->
-            <th class="p-2 border border-gray-100">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -31,11 +30,6 @@
             <td class="border border-gray-100 p-2">{{ data.record_data_value }}</td>
             <td class="border border-gray-100 p-2">{{ data.comment }}</td>
             <!-- <td class="border border-gray-100 p-2">{{ data.diagnosed_by_user?.name }}</td> -->
-            <td class="border border-gray-100 p-2">
-              <button @click="deleteData(data.id)" class="text-red-600 hover:underline">
-                Delete
-              </button>
-            </td>
           </tr>
           <tr v-if="!testData.length">
             <td colspan="4" class="text-center text-gray-500 p-4">
@@ -62,10 +56,6 @@
           <FileViewer  v-for="file in testFiles" :key="file.id" :fileUrl=file.record_file class="m-4" />
         </div>
       </ul>
-
-      <button @click="showFileModal = true" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Upload File
-      </button>
     </div>
 
   </div>
@@ -82,7 +72,6 @@ import FileViewer from '@/components/FileViewer.vue'
 
 const userStore = useUserStore()
 const route = useRoute()
-const router = useRouter()
 const props = defineProps({
   title: String,
   count: String,
@@ -97,21 +86,6 @@ const visitLabTestId = route.params.visitLabTestId
 const test = ref([])
 const testData = ref([])
 const testFiles = ref([])
-const initialData = {
-  patient_visit_laboratory_test_id: visitLabTestId,
-  record_data_key: '',
-  record_data_value: '',
-  comment: '',
-  created_by_user_id: userStore.user.id,
-  diagnosed_by_user_id: userStore.user.id
-}
-
-const newData = reactive({ ...initialData })
-
-const loadingData = ref(false)
-const loadingFile = ref(false)
-const selectedFiles = ref(null)
-const showFileModal = ref(false)
 
 const loadTest = async () => {
   const { data } = await axios.get(`/medical-provider/patient-visit/patient-visit-laboratory-test/${visitLabTestId}`, {
@@ -131,70 +105,11 @@ const loadData = async () => {
 
 const loadFiles = async () => {
   const { data } = await axios.get(`/medical-provider/patient-visit/patient-visit-lab-test-files`, {
-    params: { patient_visit_laboratory_test_id: visitLabTestId }
+    params: { patientVisitLaboratoryTestId: visitLabTestId }
   })
   testFiles.value = data.data.items
 }
 
-const addData = async () => {
-  loadingData.value = true
-  try {
-    await axios.post(
-      '/medical-provider/patient-visit/patient-visit-lab-test-data',
-      newData
-    )
-    await loadData()
-    // clearForm()
-  } finally {
-    loadingData.value = false
-  }
-}
-
-const handleFileChange = (e) => {
-  selectedFiles.value = Array.from(e.target.files)
-}
-
-const uploadFiles = async () => {
-  if (!selectedFiles.value.length) return
-  loadingFile.value = true
-
-  const formData = new FormData()
-  formData.append('patient_visit_laboratory_test_id', visitLabTestId)
-  selectedFiles.value.forEach(file => {
-    formData.append('record_files[]', file)
-  })
-
-  try {
-    await axios.post(
-      '/medical-provider/patient-visit/patient-visit-lab-test-files',
-      formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } }
-    )
-
-    await loadFiles() // reload your list of files
-    selectedFiles.value = []
-    showFileModal.value = false
-  } catch (error) {
-    console.error(error)
-  } finally {
-    loadingFile.value = false
-  }
-}
-
-const deleteData = async (id) => {
-  if (!confirm('Are you sure you want to delete this data?')) return
-
-  try {
-    await axios.delete(`/medical-provider/patient-visit/patient-visit-lab-test-data/${id}`)
-    await loadData() // refresh the table
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const clearForm = () => {
-  Object.assign(newData, initialData)
-}
 
 onMounted(async () => {
   await loadTest()

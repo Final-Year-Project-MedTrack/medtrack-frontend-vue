@@ -57,16 +57,7 @@
       </div>
     </div>
     <div v-else-if="error" class="text-red-600">Error: {{ error }}</div>
-    <!-- <component v-else :is="currentComponent" :visit=visit :patient="visit.patient" /> -->
     <router-view v-else :visit="visit" :patient="visit.patient" />
-      <!-- <router-view v-slot="{ Component }">
-        <component
-        :is="Component"
-        v-if="Component"
-        :visit="visit"
-        :patient="visit.patient"
-        />
-      </router-view> -->
   </div>
 </template>
 
@@ -75,8 +66,6 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import api from '@/services/axios'
 import ViewVisitDashboardHeader from '@/components/medicalProviderAdmin/visitsPage/ViewVisitDashboardHeader.vue'
-import VisitOverview from '@/components/medicalProviderAdmin/visitsPage/VisitOverview.vue'
-import MedicalRecords from '@/components/medicalProviderAdmin/medicalRecord/FetchMedicalRecordsWithLabResult.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -89,18 +78,12 @@ let visit = {
 
 const tabs = [
   { name: 'RadiologistDashboardViewVisitWithLabResultsOverview', label: 'Overview' },
-  // { name: 'medical-record', label: 'Medical Record' },
   { name: 'RadiologistDashboardViewVisitWithLabResultsLabTest', label: 'Lab Test' },
 ]
 
 function goToTab(tab) {
   router.push({ name: tab.name })
 }
-
-// Simulate data loading
-// setTimeout(() => {
-//   loading.value = false
-// }, 1500)
 
 
 onMounted(async () => {
