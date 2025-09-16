@@ -206,5 +206,5 @@ const props = defineProps({
   visit: Object,
 })
 
-const patient = visit.patient
+const patient = props.visit.patient
 </script>
